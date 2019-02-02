@@ -23,36 +23,49 @@ class TopNav extends Component {
         });
     }
 
+    renderMenuContainer = () => {
+        const menuItems = [
+            { text: 'Link 1' },
+            { text: 'Link 2' },
+            { text: 'Link 3' }
+        ]
+
+        let menuContainer = (
+            <div
+                onMouseOver={this.mouseOver}
+                onMouseOut={this.mouseOut}
+                onClick={this.menuClick}
+                className='dropdownContent'
+                style={{ display: this.state.display }} >
+                {menuItems.map(menuItem => {
+                    return (
+                        <div
+                            className='menuItem'
+                            onClick={this.menuClick}
+                        >{menuItem.text}</div>
+                    )
+                })}
+            </div>);
+
+        return menuContainer;
+    }
+
+    renderDropDownMenu = () => {
+        
+    }
+
     render() {
         return (
-            <ul>
-                <li className='dropbtn'>home</li>
-                <li className='dropbtn'>stuff</li>
+            <ul id='topnav'>
+                <li className='menubtn'>home</li>
+                <li className='menubtn'>stuff</li>
                 <li className='dropbtn'
-                        onMouseOver={this.mouseOver}
-                        onMouseOut={this.mouseOut}
-                        onClick={this.menuClick}
+                    onMouseOver={this.mouseOver}
+                    onMouseOut={this.mouseOut}
+                    onClick={this.menuClick}
                 >
                     <span className='dropbtnLabel'>junk</span>
-                    <div
-                        onMouseOver={this.mouseOver}
-                        onMouseOut={this.mouseOut}
-                        onClick={this.menuClick}
-                        className='dropdownContent'
-                        style={{ display: this.state.display }} >
-                        <div  
-                            className='menuItem'
-                            onClick={this.menuClick}
-                        >Link 1</div>
-                        <div  
-                            className='menuItem'
-                            onClick={this.menuClick}
-                        >Link 2</div>
-                        <div  
-                            className='menuItem'
-                            onClick={this.menuClick}
-                        ><a href="/">Link 3</a></div>
-                    </div>
+                    {this.renderMenuContainer()}
                 </li>
             </ul>
         )

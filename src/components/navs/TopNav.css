@@ -11,7 +11,7 @@
   }
   
   /* menu 'button' */
-  li, .dropbtn {
+  li, .dropbtn, .menubtn {
     display: inline-block;
     color: white;
     text-align: center;
