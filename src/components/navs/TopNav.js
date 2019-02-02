@@ -1,39 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './TopNav.css';
 
-class TopNav extends React.Component {
+class TopNav extends Component {
     state = {
-        menuClass: 'hide'
+        hover: false,
+        display: 'none'
     }
 
-    menuClicked = (event) => {
-        console.log({ target: event.target })
+    mouseOver = () => {
+        this.setState({ hover: true, display: 'block' });
+    }
+
+    mouseOut = () => {
+        this.setState({ hover: false, display: 'none' });
+    }
+
+    menuClick = () => {
         this.setState(prevState => {
-            let updatedClass = prevState.menuClass;
-            if (updatedClass === 'show') {
-                updatedClass = 'hide';
-            }
-            return { menuClass: updatedClass }
-        })
+            let display = 'none';
+            if (prevState.display === 'none') display = 'block';
+            return { hover: false, display: display }
+        });
     }
 
     render() {
-        let ddClasses = this.state.menuClass + " dropdownContent";
         return (
-            <ul onClick={this.menuClicked}>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#news">News</a></li>
-                <li className="dropdown">
-                    <a href="javascript:void(0)" className="dropbtn">Dropdown</a>
-                    <div className={ddClasses} >
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
+            <ul>
+                <li className='dropbtn'>home</li>
+                <li className='dropbtn'>stuff</li>
+                <li className='dropbtn'
+                        onMouseOver={this.mouseOver}
+                        onMouseOut={this.mouseOut}
+                        onClick={this.menuClick}
+                >
+                    <span className='dropbtnLabel'>junk</span>
+                    <div
+                        onMouseOver={this.mouseOver}
+                        onMouseOut={this.mouseOut}
+                        onClick={this.menuClick}
+                        className='dropdownContent'
+                        style={{ display: this.state.display }} >
+                        <div  
+                            className='menuItem'
+                            onClick={this.menuClick}
+                        >Link 1</div>
+                        <div  
+                            className='menuItem'
+                            onClick={this.menuClick}
+                        >Link 2</div>
+                        <div  
+                            className='menuItem'
+                            onClick={this.menuClick}
+                        ><a href="/">Link 3</a></div>
                     </div>
                 </li>
             </ul>
         )
     }
+
 }
 
 export default TopNav;

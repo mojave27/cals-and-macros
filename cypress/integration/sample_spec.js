@@ -1,14 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from '../../src/App.js';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import App from '../../src/App.js';
 
-describe('Default React App.js test', () => {
-    it('renders without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<App />, div);
-        ReactDOM.unmountComponentAtNode(div);
-    });
-})
+// describe('Default React App.js test', () => {
+//     it('renders without crashing', () => {
+//         const div = document.createElement('div');
+//         ReactDOM.render(<App />, div);
+//         ReactDOM.unmountComponentAtNode(div);
+//     });
+// })
 
 describe('basic ui test', () => {
     it('finds text on page', () => {

@@ -16,24 +16,19 @@ class HoverButton extends Component {
 
     menuClick = () => {
         this.setState(prevState => {
-            let display = prevState.display;
-            if (display === 'none') display = 'block';
+            let display = 'none';
+            if (prevState.display === 'none') display = 'block';
             return { hover: false, display: display }
         });
     }
 
     render() {
-        var label = "foo";
-        if (this.state.hover) {
-            label = "bar";
-        }
         return (
             <div>
                 <div
                     onMouseOver={this.mouseOver}
                     onMouseOut={this.mouseOut}
                     onClick={this.menuClick}
-                    label={label}
                     style={{ width: '100px', height: '50px', backgroundColor: 'red' }}
                 />
                 <div
