@@ -23,12 +23,15 @@ class TopNav extends Component {
         });
     }
 
+    // renderMenuContainer = (menuItems) => {
     renderMenuContainer = () => {
+        // TODO: Get these from props
         const menuItems = [
             { text: 'Link 1' },
             { text: 'Link 2' },
-            { text: 'Link 3' }
-        ]
+            { a: <a href='/'>Link 3</a> },
+            // { link: <Link to='/' />}
+        ];
 
         let menuContainer = (
             <div
@@ -42,7 +45,7 @@ class TopNav extends Component {
                         <div
                             className='menuItem'
                             onClick={this.menuClick}
-                        >{menuItem.text}</div>
+                        >{menuItem.a ? menuItem.a : menuItem.text}</div>
                     )
                 })}
             </div>);
@@ -51,7 +54,18 @@ class TopNav extends Component {
     }
 
     renderDropDownMenu = () => {
-        
+        const menuText = 'junk';
+        let dropDownMenu = (
+            <li className='dropbtn'
+                onMouseOver={this.mouseOver}
+                onMouseOut={this.mouseOut}
+                onClick={this.menuClick}
+            >
+                <span className='dropbtnLabel'>{menuText}</span>
+                {this.renderMenuContainer()}
+            </li>
+        );
+        return dropDownMenu;
     }
 
     render() {
@@ -59,14 +73,7 @@ class TopNav extends Component {
             <ul id='topnav'>
                 <li className='menubtn'>home</li>
                 <li className='menubtn'>stuff</li>
-                <li className='dropbtn'
-                    onMouseOver={this.mouseOver}
-                    onMouseOut={this.mouseOut}
-                    onClick={this.menuClick}
-                >
-                    <span className='dropbtnLabel'>junk</span>
-                    {this.renderMenuContainer()}
-                </li>
+                {this.renderDropDownMenu()}
             </ul>
         )
     }
