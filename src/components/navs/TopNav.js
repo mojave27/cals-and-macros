@@ -1,24 +1,8 @@
 import React, { Component } from 'react';
+import { topNavMenuConfig } from './topNavMenuConfig';
 import './TopNav.css';
 
-const menuConfig = {
-    menuItems: [
-        {   menuName: 'home' },
-        {   menuName: 'stuff' },
-        {   menuName: 'link',
-            a: (<a href='/'>{'link'}</a>),
-        },
-        {
-            menuName: 'calc',
-            dropDownItems: [
-                { text: 'Link 1' },
-                { text: 'Link 2' },
-                { a: <a href='/'>Link 3</a> },
-                // { link: <Link to='/' />}
-            ]
-        }
-    ]
-}
+const menuConfig = topNavMenuConfig();
 
 class TopNav extends Component {
     state = {
@@ -86,7 +70,6 @@ class TopNav extends Component {
     }
 
     renderTopNav = () => {
-        console.log(`menuItems: ${JSON.stringify(menuConfig.menuItems)}`);
         return menuConfig.menuItems.map( menuItem => {
             if(menuItem.dropDownItems){
                 return this.renderDropDownMenu(menuItem);
