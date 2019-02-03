@@ -19,6 +19,11 @@
     text-decoration: none;
   }
 
+  .menubtn a {
+    color: white;
+    text-decoration: none;
+  }
+
   li div {
     color: white;
     text-align: center;

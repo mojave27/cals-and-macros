@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import './TopNav.css';
 
+const menuConfig = {
+    menuItems: [
+        {   menuName: 'home' },
+        {   menuName: 'stuff' },
+        {   menuName: 'link',
+            a: (<a href='/'>{'link'}</a>),
+        },
+        {
+            menuName: 'calc',
+            dropDownItems: [
+                { text: 'Link 1' },
+                { text: 'Link 2' },
+                { a: <a href='/'>Link 3</a> },
+                // { link: <Link to='/' />}
+            ]
+        }
+    ]
+}
+
 class TopNav extends Component {
     state = {
         hover: false,
@@ -24,15 +43,7 @@ class TopNav extends Component {
     }
 
     // renderMenuContainer = (menuItems) => {
-    renderMenuContainer = () => {
-        // TODO: Get these from props
-        const menuItems = [
-            { text: 'Link 1' },
-            { text: 'Link 2' },
-            { a: <a href='/'>Link 3</a> },
-            // { link: <Link to='/' />}
-        ];
-
+    renderMenuContainer = (menuItems) => {
         let menuContainer = (
             <div
                 onMouseOver={this.mouseOver}
@@ -49,31 +60,46 @@ class TopNav extends Component {
                     )
                 })}
             </div>);
-
         return menuContainer;
     }
 
-    renderDropDownMenu = () => {
-        const menuText = 'junk';
+    renderDropDownMenu = (menuItem) => {
         let dropDownMenu = (
             <li className='dropbtn'
                 onMouseOver={this.mouseOver}
                 onMouseOut={this.mouseOut}
                 onClick={this.menuClick}
             >
-                <span className='dropbtnLabel'>{menuText}</span>
-                {this.renderMenuContainer()}
+                <span className='dropbtnLabel'>{menuItem.menuName}</span>
+                {this.renderMenuContainer(menuItem.dropDownItems)}
             </li>
         );
         return dropDownMenu;
     }
 
+    renderStaticMenuItem = (menuItem) => {
+        let innerContent = menuItem.a ? menuItem.a : menuItem.menuName;
+        let staticMenuItem = (
+            <li className='menubtn'>{innerContent}</li>
+        );
+        return staticMenuItem;
+    }
+
+    renderTopNav = () => {
+        console.log(`menuItems: ${JSON.stringify(menuConfig.menuItems)}`);
+        return menuConfig.menuItems.map( menuItem => {
+            if(menuItem.dropDownItems){
+                return this.renderDropDownMenu(menuItem);
+            }else{
+                return this.renderStaticMenuItem(menuItem);
+            }
+        })
+    }
+
     render() {
         return (
             <ul id='topnav'>
-                <li className='menubtn'>home</li>
-                <li className='menubtn'>stuff</li>
-                {this.renderDropDownMenu()}
+                {this.renderTopNav()}
             </ul>
         )
     }
