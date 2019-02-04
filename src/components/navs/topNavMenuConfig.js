@@ -1,13 +1,17 @@
 import React from 'react';
+import { Link } from "@reach/router";
 
 export const topNavMenuConfig = () => {
     return ({
         menuItems: [
             { menuName: 'home' },
+            { menuName: 'link',
+                link: (<Link to='/'>{'link'}</Link>),
+            },
             { menuName: 'stuff' },
             {
                 menuName: 'link',
-                a: (<a href='/'>{'link'}</a>),
+                link: (<a href='/'>{'a-tag'}</a>),
             },
             {
                 menuName: 'calc',

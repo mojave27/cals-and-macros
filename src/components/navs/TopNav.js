@@ -35,9 +35,10 @@ class TopNav extends Component {
                 onClick={this.menuClick}
                 className='dropdownContent'
                 style={{ display: this.state.display }} >
-                {menuItems.map(menuItem => {
+                {menuItems.map( (menuItem, index) => {
                     return (
                         <div
+                            key={index}
                             className='menuItem'
                             onClick={this.menuClick}
                         >{menuItem.a ? menuItem.a : menuItem.text}</div>
@@ -47,12 +48,13 @@ class TopNav extends Component {
         return menuContainer;
     }
 
-    renderDropDownMenu = (menuItem) => {
+    renderDropDownMenu = (menuItem, index) => {
         let dropDownMenu = (
             <li className='dropbtn'
                 onMouseOver={this.mouseOver}
                 onMouseOut={this.mouseOut}
                 onClick={this.menuClick}
+                key={index}
             >
                 <span className='dropbtnLabel'>{menuItem.menuName}</span>
                 {this.renderMenuContainer(menuItem.dropDownItems)}
@@ -61,20 +63,20 @@ class TopNav extends Component {
         return dropDownMenu;
     }
 
-    renderStaticMenuItem = (menuItem) => {
-        let innerContent = menuItem.a ? menuItem.a : menuItem.menuName;
+    renderStaticMenuItem = (menuItem, index) => {
+        let innerContent = menuItem.link ? menuItem.link : menuItem.menuName;
         let staticMenuItem = (
-            <li className='menubtn'>{innerContent}</li>
+            <li key={index} className='menubtn'>{innerContent}</li>
         );
         return staticMenuItem;
     }
 
     renderTopNav = () => {
-        return menuConfig.menuItems.map( menuItem => {
+        return menuConfig.menuItems.map( (menuItem, index) => {
             if(menuItem.dropDownItems){
-                return this.renderDropDownMenu(menuItem);
+                return this.renderDropDownMenu(menuItem, index);
             }else{
-                return this.renderStaticMenuItem(menuItem);
+                return this.renderStaticMenuItem(menuItem, index);
             }
         })
     }
