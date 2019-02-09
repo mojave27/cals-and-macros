@@ -8,7 +8,14 @@ export const topNavMenuConfig = () => {
             { menuName: 'link',
                 link: (<Link to='/'>{'link'}</Link>),
             },
-            { menuName: 'stuff' },
+            { 
+                menuName: 'stuff',
+                dropDownItems: [
+                    { text: 'plain-text' },
+                    { link: <a href='/'>{'a-tag'}</a> },
+                    { link: (<Link to='/'>{'link'}</Link>)},
+                ]
+            },
             {
                 menuName: 'link',
                 link: (<a href='/'>{'a-tag'}</a>),
@@ -17,9 +24,8 @@ export const topNavMenuConfig = () => {
                 menuName: 'calc',
                 dropDownItems: [
                     { text: 'Link 1' },
-                    { text: 'Link 2' },
-                    { a: <a href='/'>Link 3</a> },
-                    // { link: <Link to='/' />}
+                    { link: <a href='form'>form</a> },
+                    { link: <a href='/'>Link 3</a> },
                 ]
             }
         ]

@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 // import './App.css';
 import TopNav from './components/navs/TopNav';
+import Form from './components/forms/Form';
+import { Link, Router } from "@reach/router";
 
 class App extends Component {
   render() {
     return (
       <div>
-        <TopNav/>
+        <div>
+          <TopNav />
+        </div>
+        <Router>
+          <Form path="form" />
+          {/* <Dashboard path="/dashboard" /> */}
+        </Router>
       </div>
     );
   }
