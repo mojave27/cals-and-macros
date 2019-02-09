@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 // import './App.css';
 import TopNav from './components/navs/TopNav';
 import Form from './components/forms/Form';
-import { Link, Router } from "@reach/router";
+import HoverTest from './components/experimental/HoverTest';
+import { Router } from "@reach/router";
 
 class App extends Component {
   render() {
@@ -13,7 +14,7 @@ class App extends Component {
         </div>
         <Router>
           <Form path="form" />
-          {/* <Dashboard path="/dashboard" /> */}
+          <HoverTest path="hovertest" />
         </Router>
       </div>
     );
