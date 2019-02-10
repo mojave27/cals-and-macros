@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'semantic-ui-react';
+import { Button, Confirm, Input } from 'semantic-ui-react';
 import retrieveFoodList from '../../../apis/retrieveFoodList';
 import FoodListTable from '../../table/FoodListTable/FoodListTable';
 import styles from './FoodSearch.module.css';
@@ -13,6 +13,9 @@ class FoodSearch extends Component {
     foodList: [],
     activeFood: {}
   };
+
+  handleModalCancel = () => { this.setState({showConfirm: false}) }
+  handleModalConfirm = () => { this.setState({showConfirm: false}) }
 
   handleInputChange = e => {
     this.setState({ searchValue: e.target.value });
@@ -40,9 +43,11 @@ class FoodSearch extends Component {
     retrieveFoodList(this.state.searchValue).then(apiSearchResults => {
       let foodList = [];
       let error = true;
-      
+      let message = 'No items found for search term.';
+
       if (apiSearchResults.length > 0) {
         error = false;
+        message = '';
         foodList = apiSearchResults.map(foodItem => {
           return {
             active: false,
@@ -54,7 +59,8 @@ class FoodSearch extends Component {
       this.setState({
         foodList: foodList,
         loading: false,
-        showConfirm: error
+        showConfirm: error,
+        message: message
       });
     });
   };
@@ -82,6 +88,13 @@ class FoodSearch extends Component {
             rowClick={this.handleFoodSelect}
           />
         ) : null}
+        <Confirm 
+            open={this.state.showConfirm} 
+            onCancel={this.handleModalCancel} 
+            onConfirm={this.handleModalConfirm} 
+            content={this.state.message}
+            size='tiny'
+        />
       </div>
     );
   }
