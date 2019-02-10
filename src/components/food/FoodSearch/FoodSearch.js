@@ -7,6 +7,8 @@ import styles from './FoodSearch.module.css';
 class FoodSearch extends Component {
   state = {
     loading: false,
+    showConfirm: false,
+    message: '',
     searchValue: '',
     foodList: [],
     activeFood: {}
@@ -22,35 +24,37 @@ class FoodSearch extends Component {
   };
 
   handleFoodSelect = (rowId, event) => {
-    console.log(`selected row data: ${JSON.stringify(rowId)}`)
-    this.setActiveRow(rowId);
-  }
-
-  setActiveRow(rowId){
-      let updatedResults = this.state.foodList.map(foodItem => {
-          let updatedFoodItem = {...foodItem}
-          updatedFoodItem.active = false;
-          return updatedFoodItem;
-      });
-    //   console.log(`updatedResults[${rowId}]: ${JSON.stringify(updatedResults[rowId])}`)
-      updatedResults[rowId].active = true;
-      this.setState({
-          foodList: updatedResults,
-          activeFood: updatedResults[rowId]
-      })
-  }
+    let updatedResults = this.state.foodList.map(foodItem => {
+      let updatedFoodItem = { ...foodItem };
+      updatedFoodItem.active = false;
+      return updatedFoodItem;
+    });
+    updatedResults[rowId].active = true;
+    this.setState({
+      foodList: updatedResults,
+      activeFood: updatedResults[rowId]
+    });
+  };
 
   retrieve = () => {
     retrieveFoodList(this.state.searchValue).then(apiSearchResults => {
-       let foodList = apiSearchResults.map(foodItem => {
-        return {
-          active: false,
-          ...foodItem
-        };
-      });
+      let foodList = [];
+      let error = true;
+      
+      if (apiSearchResults.length > 0) {
+        error = false;
+        foodList = apiSearchResults.map(foodItem => {
+          return {
+            active: false,
+            ...foodItem
+          };
+        });
+      }
+
       this.setState({
         foodList: foodList,
-        loading: false
+        loading: false,
+        showConfirm: error
       });
     });
   };
@@ -73,8 +77,8 @@ class FoodSearch extends Component {
         </Button>
         <br />
         {this.state.foodList.length > 0 ? (
-          <FoodListTable 
-            foodList={this.state.foodList} 
+          <FoodListTable
+            foodList={this.state.foodList}
             rowClick={this.handleFoodSelect}
           />
         ) : null}

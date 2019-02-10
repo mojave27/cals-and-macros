@@ -12,6 +12,7 @@ const retrieveFoodList = searchTerm => {
     .catch(function(error) {
       // handle error
       console.log(error);
+      return [];
     });
 };
 
