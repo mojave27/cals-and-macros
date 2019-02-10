@@ -1,95 +1,81 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
+
 import "./TopNav.css";
-
-// TODO: Get these from props or imported
-const dropDownOne = {
-  name: "misc",
-  items: [
-    { text: "dead link" },
-    { a: <Link to="form">form</Link> },
-    { a: <Link to="/">home</Link> }
-  ]
-};
-
-const dropDownTwo = {
-  name: "calcs",
-  items: [
-    { a: <Link to="macros">macros</Link> },
-    { a: <Link to="food-search">food search</Link> }
-  ]
-};
 
 class TopNav extends Component {
   state = {
-    hover: false,
-    display: "none"
-  };
+    display: {
+      other2: 'none',
+      calcs: 'none'
+    }
+  }
 
-  mouseOver = () => {
-    this.setState({ hover: true, display: "block" });
-  };
+  handleClick = (event) => {
+    this.toggleDisplay(event, 'none');
+    // const menuName = event.target.getAttribute('menu-name'); 
+    // console.log(`menuName: ${menuName}`)
+    // let currDisplay = this.state.display;
+    // currDisplay[menuName] = 'none';
+    // this.setState({display:currDisplay})
+  }
 
-  mouseOut = () => {
-    this.setState({ hover: false, display: "none" });
-  };
+  mouseOver = (event) => {
+    this.toggleDisplay(event, 'block');
+  }
 
-  menuClick = () => {
-    this.setState(prevState => {
-      let display = "none";
-      if (prevState.display === "none") display = "block";
-      return { hover: false, display: display };
-    });
-  };
+  mouseOut = (event) => {
+    this.toggleDisplay(event, 'none');
+  }
 
-  renderMenuContainer = menuItems => {
-    let menuContainer = (
-      <div
-        onMouseOver={this.mouseOver}
-        onMouseOut={this.mouseOut}
-        onClick={this.menuClick}
-        className="dropdownContent"
-        style={{ display: this.state.display }}
-      >
-        {menuItems.map((menuItem, index) => {
-          return (
-            <div key={index} className="menuItem" onClick={this.menuClick}>
-              {menuItem.a ? menuItem.a : menuItem.text}
-            </div>
-          );
-        })}
-      </div>
-    );
-
-    return menuContainer;
-  };
-
-  renderDropDownMenu = menuConfig => {
-    const menuText = menuConfig.name;
-    let dropDownMenu = (
-      <li
-        className="dropbtn"
-        onMouseOver={this.mouseOver}
-        onMouseOut={this.mouseOut}
-        onClick={this.menuClick}
-      >
-        <span className="dropbtnLabel">{menuText}</span>
-        {this.renderMenuContainer(menuConfig.items)}
-      </li>
-    );
-    return dropDownMenu;
-  };
+  toggleDisplay = (event, displayType) => {
+    const menuName = event.target.getAttribute('menu-name'); 
+    let display = this.state.display;
+    display[menuName] = displayType;
+    this.setState({display:display})
+  }
 
   render() {
     return (
-      <ul id="topnav">
-        <li className="menubtn">
-          <Link to="/">home</Link>
-        </li>
-        <li className="menubtn">stuff</li>
-        {this.renderDropDownMenu(dropDownOne)}
-        {/* {this.renderDropDownMenu(dropDownTwo)} */}
-      </ul>
+      <div>
+        <div className="navbar">
+          <a href='/'>home</a>
+          <a href="/">other</a>
+          <div className="dropdown">
+            <button className="dropbtn">
+              calcs
+              <i className="fa fa-caret-down" />
+            </button>
+            <div className="dropdown-content">
+              <Link to="form">form</Link>
+              <Link to="hovertest">hover test</Link>
+              <Link to="/">home</Link>
+            </div>
+          </div>
+          <div menu-name='other2' onClick={this.handleClick} className="dropdown">
+            <button 
+              onMouseOver={this.mouseOver}
+              // onMouseOut={this.mouseOut}
+              menu-name='other2' 
+              className="dropbtn"
+            >
+              other2
+              <i className="fa fa-caret-down" />
+            </button>
+            <div 
+              style={{display: this.state.display.other2}} 
+              menu-name='other2' 
+              onClick={this.handleClick} 
+              onMouseOut={this.mouseOut}
+              className="dropdown-content"
+            >
+              <Link menu-name='other2' to="form">form</Link>
+              <Link menu-name='other2' to="hovertest">hover test</Link>
+              <a menu-name='other2' href="/">Link 3</a>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
