@@ -6,10 +6,7 @@ import "./TopNav.css";
 
 class TopNav extends Component {
   state = {
-    display: {
-      other2: "none",
-      calcs: "none"
-    }
+    display: {}
   };
 
   handleClick = event => {
