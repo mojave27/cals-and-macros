@@ -4,8 +4,7 @@ export const menuConfig =
         { name: 'calcs',
             items: [
                 { to: 'form', text: 'form' },
-                { to: 'hovertest', text: 'hovertest' },
-                { to: '/', text: 'home' }
+                { to: 'food-search', text: 'food-search' }
             ]
          },
         { name: 'other',
