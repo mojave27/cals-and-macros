@@ -11,7 +11,7 @@ const retrieveFoodList = searchTerm => {
     })
     .catch(function(error) {
       // handle error
-      console.log(error);
+      console.log(`[retrieveFoodList] api error: ${error}`);
       return [];
     });
 };
