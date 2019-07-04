@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styles from './App.module.css';
 // import './index.css';
 import TopNav from './components/navs/TopNav';
+import Home from './components/Home/Home';
+import MealCalc from './components/MealCalc/MealCalc';
 import Form from './components/forms/Form';
 import FoodSearch from './components/food/FoodSearch/FoodSearch';
 import HoverTest from './components/experimental/HoverTest';
@@ -15,8 +17,10 @@ class App extends Component {
           <TopNav />
         </div>
         <Router>
+          <Home path="/" />
           <Form path="form" />
           <FoodSearch path="food-search" />
+          <MealCalc path="meal-calc" />
           <HoverTest path="hovertest" />
         </Router>
       </div>
