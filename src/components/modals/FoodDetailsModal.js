@@ -14,7 +14,8 @@ class Modal extends React.Component {
         <div className={styles.modal}>
           {this.props.children}
           <div className='footer'>
-            <button onClick={this.props.onClose}>Close</button>
+            {/* <button style={{margin:'10px'}} onClick={this.props.onClose}>Close</button> */}
+            <button className={styles.close} onClick={this.props.onClose}>Close</button>
           </div>
         </div>
       </div>
