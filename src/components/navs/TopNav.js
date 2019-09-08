@@ -28,10 +28,10 @@ class TopNav extends Component {
     this.setState({ display: display });
   };
 
-  renderDropDownMenu = (menuConfig) => {
+  renderDropDownMenu = (menuConfig, index) => {
     let menuName = menuConfig.name;
     return (
-      <div className="dropdown">
+      <div key={index} className="dropdown">
         <button
           onMouseOver={this.mouseOver}
           onMouseOut={this.mouseOut}
@@ -62,10 +62,10 @@ class TopNav extends Component {
       <div>
         <div className="navbar">
           <Link to="/">home</Link>
-          {this.renderDropDownMenu(menuConfig[0])}
-          {this.renderDropDownMenu(menuConfig[1])}
-          {this.renderDropDownMenu(menuConfig[2])}
-
+          { menuConfig.map( (menu, index) => {
+            return this.renderDropDownMenu(menu, index)
+            })
+          }
         </div>
       </div>
     );

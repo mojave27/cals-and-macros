@@ -8,9 +8,10 @@ const FoodListTable = props => {
     <Table celled selectable>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>ndbno</Table.HeaderCell>
-          <Table.HeaderCell>name</Table.HeaderCell>
-          <Table.HeaderCell>group</Table.HeaderCell>
+          {/* <Table.HeaderCell>ndbno</Table.HeaderCell> */}
+          <Table.HeaderCell>fdcId</Table.HeaderCell>
+          <Table.HeaderCell>description</Table.HeaderCell>
+          <Table.HeaderCell>dataType</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 

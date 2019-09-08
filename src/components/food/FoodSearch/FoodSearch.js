@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Confirm, Input } from 'semantic-ui-react';
 import retrieveFoodList from '../../../apis/retrieveFoodList';
+import retrieveFoodItem from '../../../apis/retrieveFoodItem';
 import FoodListTable from '../../table/FoodListTable/FoodListTable';
+import FoodDetails from '../../food/FoodItem/FoodDetails';
+import FoodDetailsModal from '../../modals/FoodDetailsModal';
 import styles from './FoodSearch.module.css';
 
 class FoodSearch extends Component {
@@ -11,7 +14,15 @@ class FoodSearch extends Component {
     message: '',
     searchValue: '',
     foodList: [],
-    activeFood: {}
+    activeFood: {},
+    showModal: false
+  };
+
+  handleModalCancel = () => {
+    this.setState({ showConfirm: false });
+  };
+  handleModalConfirm = () => {
+    this.setState({ showConfirm: false });
   };
 
   handleModalCancel = () => { this.setState({showConfirm: false}) }
@@ -33,9 +44,20 @@ class FoodSearch extends Component {
       return updatedFoodItem;
     });
     updatedResults[rowId].active = true;
-    this.setState({
-      foodList: updatedResults,
-      activeFood: updatedResults[rowId]
+    // this.retrieveItem(updatedResults[rowId].fdcId).then(foodItem => {
+    retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
+      this.setState({
+        foodList: updatedResults,
+        activeFood: updatedResults[rowId],
+        activeFoodDetails: foodItem,
+        showModal: true
+      });
+    });
+  };
+
+  toggleModal = () => {
+    this.setState(prevState => {
+      return { showModal: !prevState.showModal };
     });
   };
 
@@ -44,11 +66,12 @@ class FoodSearch extends Component {
       let foodList = [];
       let error = true;
       let message = 'No items found for search term.';
+      let initialFoodList = apiSearchResults.foods;
 
-      if (apiSearchResults.length > 0) {
+      if (initialFoodList.length > 0) {
         error = false;
         message = '';
-        foodList = apiSearchResults.map(foodItem => {
+        foodList = initialFoodList.map(foodItem => {
           return {
             active: false,
             ...foodItem
@@ -68,6 +91,12 @@ class FoodSearch extends Component {
   render() {
     return (
       <div className={styles.container}>
+        <FoodDetailsModal
+          show={this.state.showModal}
+          onClose={this.toggleModal}
+        >
+          <FoodDetails foodDetails={this.state.activeFoodDetails} />
+        </FoodDetailsModal>
         <Input
           loading={this.state.loading}
           icon='search'
