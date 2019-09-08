@@ -44,7 +44,6 @@ class FoodSearch extends Component {
       return updatedFoodItem;
     });
     updatedResults[rowId].active = true;
-    // this.retrieveItem(updatedResults[rowId].fdcId).then(foodItem => {
     retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
       this.setState({
         foodList: updatedResults,
