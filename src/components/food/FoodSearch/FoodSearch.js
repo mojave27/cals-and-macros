@@ -3,7 +3,7 @@ import { Button, Confirm, Input } from 'semantic-ui-react';
 import retrieveFoodList from '../../../apis/retrieveFoodList';
 import retrieveFoodItem from '../../../apis/retrieveFoodItem';
 import FoodListTable from '../../table/FoodListTable/FoodListTable';
-// import FoodDetails from '../../food/FoodItem/FoodDetails';
+import FoodDetails from '../../food/FoodItem/FoodDetails';
 import FoodDetailsModal from '../../modals/FoodDetailsModal';
 import styles from './FoodSearch.module.css';
 
@@ -92,7 +92,7 @@ class FoodSearch extends Component {
           show={this.state.showModal}
           onClose={this.toggleModal}
         >
-          <div>test</div>
+          <FoodDetails foodDetails={this.state.activeFoodDetails} />
         </FoodDetailsModal>
         <Input
           loading={this.state.loading}
