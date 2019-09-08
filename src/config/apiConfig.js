@@ -5,7 +5,7 @@ import axios from 'axios';
 // }
 
 export const axiosFood = axios.create({
-  baseURL: "http://localhost:3003/",
+  baseURL: "http://localhost:3030/",
   timeout: 10000
   // headers: {'X-Custom-Header': 'foobar'}
 });

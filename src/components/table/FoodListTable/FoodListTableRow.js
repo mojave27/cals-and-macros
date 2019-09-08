@@ -9,9 +9,9 @@ const FoodListTableRow = props => {
 
   return (
     <Table.Row onClick={rowClick} active={props.rowData.active}>
-      <Table.Cell>{props.rowData.ndbno}</Table.Cell>
-      <Table.Cell>{props.rowData.name}</Table.Cell>
-      <Table.Cell>{props.rowData.group}</Table.Cell>
+      <Table.Cell>{props.rowData.fdcId}</Table.Cell>
+      <Table.Cell>{props.rowData.description}</Table.Cell>
+      <Table.Cell>{props.rowData.dataType}</Table.Cell>
     </Table.Row>
   );
 };

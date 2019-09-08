@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Confirm, Input } from 'semantic-ui-react';
 import retrieveFoodList from '../../../apis/retrieveFoodList';
+import retrieveFoodItem from '../../../apis/retrieveFoodItem';
 import FoodListTable from '../../table/FoodListTable/FoodListTable';
+import FoodDetails from '../../food/FoodItem/FoodDetails';
 import styles from './FoodSearch.module.css';
 
 class FoodSearch extends Component {
@@ -11,11 +13,16 @@ class FoodSearch extends Component {
     message: '',
     searchValue: '',
     foodList: [],
-    activeFood: {}
+    activeFood: {},
+    showModal: false
   };
 
-  handleModalCancel = () => { this.setState({showConfirm: false}) }
-  handleModalConfirm = () => { this.setState({showConfirm: false}) }
+  handleModalCancel = () => {
+    this.setState({ showConfirm: false });
+  };
+  handleModalConfirm = () => {
+    this.setState({ showConfirm: false });
+  };
 
   handleInputChange = e => {
     this.setState({ searchValue: e.target.value });
@@ -33,22 +40,33 @@ class FoodSearch extends Component {
       return updatedFoodItem;
     });
     updatedResults[rowId].active = true;
-    this.setState({
-      foodList: updatedResults,
-      activeFood: updatedResults[rowId]
+    // this.retrieveItem(updatedResults[rowId].fdcId).then(foodItem => {
+    retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
+      this.setState({
+        foodList: updatedResults,
+        activeFood: updatedResults[rowId],
+        activeFoodDetails: foodItem
+      });
     });
   };
+
+  toggleModal = () => {
+    this.setState( prevState => {
+      return {showModal: !prevState.showModal}
+    })
+  }
 
   retrieve = () => {
     retrieveFoodList(this.state.searchValue).then(apiSearchResults => {
       let foodList = [];
       let error = true;
       let message = 'No items found for search term.';
+      let initialFoodList = apiSearchResults.foods;
 
-      if (apiSearchResults.length > 0) {
+      if (initialFoodList.length > 0) {
         error = false;
         message = '';
-        foodList = apiSearchResults.map(foodItem => {
+        foodList = initialFoodList.map(foodItem => {
           return {
             active: false,
             ...foodItem
@@ -88,12 +106,17 @@ class FoodSearch extends Component {
             rowClick={this.handleFoodSelect}
           />
         ) : null}
-        <Confirm 
-            open={this.state.showConfirm} 
-            onCancel={this.handleModalCancel} 
-            onConfirm={this.handleModalConfirm} 
-            content={this.state.message}
-            size='tiny'
+        <br />
+        {this.state.activeFoodDetails ? (
+          // change this to a modal
+          <FoodDetails foodDetails={this.state.activeFoodDetails} />
+        ) : null}
+        <Confirm
+          open={this.state.showConfirm}
+          onCancel={this.handleModalCancel}
+          onConfirm={this.handleModalConfirm}
+          content={this.state.message}
+          size='tiny'
         />
       </div>
     );

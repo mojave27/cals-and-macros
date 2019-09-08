@@ -11,40 +11,38 @@ const foodItems = [
     pgrams: 6,
     cgrams: 0,
     fgrams: 5
+  },
+  {
+    item: 'applegate chicken and sage sausage',
+    quantity: 1,
+    unit: 3,
+    calories: 110,
+    pgrams: 9,
+    cgrams: 1,
+    fgrams: 8
   }
 ];
 
 class MealCalc extends Component {
+
+  state = {foodItems: foodItems}
+
   render() {
     return (
       <div className={styles.mealCalcContainer}>
         <div className={styles.titleBar}>title here</div>
         <div className={styles.row}>
-          <div className={styles.headerCell}>
-            Item
-          </div>
-          <div className={styles.headerCell}>
-            Quantity
-          </div>
-          <div className={styles.headerCell}>
-            Unit
-          </div>
-          <div className={styles.headerCell}>
-            Calories
-          </div>
-          <div className={styles.headerCell}>
-            Protein Grams
-          </div>
-          <div className={styles.headerCell}>
-            Carb Grams
-          </div>
-          <div className={styles.headerCell}>
-            Fat Grams
-          </div>
+          <div className={styles.headerCell}> Item </div>
+          <div className={styles.headerCell}> Quantity </div>
+          <div className={styles.headerCell}> Unit </div>
+          <div className={styles.headerCell}> Calories </div>
+          <div className={styles.headerCell}> Protein Grams </div>
+          <div className={styles.headerCell}> Carb Grams </div>
+          <div className={styles.headerCell}> Fat Grams </div>
         </div>
-        {foodItems.map(food => {
+        {this.state.foodItems.map(food => {
           return (
-            <div className={styles.row}>
+            <div key={food.item} className={styles.row}>
               <FoodItem food={food}/>
             </div>
           );
