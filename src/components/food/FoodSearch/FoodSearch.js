@@ -3,7 +3,8 @@ import { Button, Confirm, Input } from 'semantic-ui-react';
 import retrieveFoodList from '../../../apis/retrieveFoodList';
 import retrieveFoodItem from '../../../apis/retrieveFoodItem';
 import FoodListTable from '../../table/FoodListTable/FoodListTable';
-import FoodDetails from '../../food/FoodItem/FoodDetails';
+// import FoodDetails from '../../food/FoodItem/FoodDetails';
+import FoodDetailsModal from '../../modals/FoodDetailsModal';
 import styles from './FoodSearch.module.css';
 
 class FoodSearch extends Component {
@@ -45,16 +46,17 @@ class FoodSearch extends Component {
       this.setState({
         foodList: updatedResults,
         activeFood: updatedResults[rowId],
-        activeFoodDetails: foodItem
+        activeFoodDetails: foodItem,
+        showModal: true
       });
     });
   };
 
   toggleModal = () => {
-    this.setState( prevState => {
-      return {showModal: !prevState.showModal}
-    })
-  }
+    this.setState(prevState => {
+      return { showModal: !prevState.showModal };
+    });
+  };
 
   retrieve = () => {
     retrieveFoodList(this.state.searchValue).then(apiSearchResults => {
@@ -86,6 +88,12 @@ class FoodSearch extends Component {
   render() {
     return (
       <div className={styles.container}>
+        <FoodDetailsModal
+          show={this.state.showModal}
+          onClose={this.toggleModal}
+        >
+          <div>test</div>
+        </FoodDetailsModal>
         <Input
           loading={this.state.loading}
           icon='search'
@@ -107,10 +115,10 @@ class FoodSearch extends Component {
           />
         ) : null}
         <br />
-        {this.state.activeFoodDetails ? (
+        {/* {this.state.activeFoodDetails ? (
           // change this to a modal
           <FoodDetails foodDetails={this.state.activeFoodDetails} />
-        ) : null}
+        ) : null} */}
         <Confirm
           open={this.state.showConfirm}
           onCancel={this.handleModalCancel}
