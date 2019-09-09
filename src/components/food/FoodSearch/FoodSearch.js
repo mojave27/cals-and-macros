@@ -38,7 +38,8 @@ class FoodSearch extends Component {
     this.retrieve();
   };
 
-  handleFoodSelect = (rowId, event) => {
+  handleRowSelect = (rowId, event) => {
+    event.preventDefault()
     let updatedResults = this.state.foodList.map(foodItem => {
       let updatedFoodItem = { ...foodItem };
       updatedFoodItem.active = false;
@@ -124,7 +125,9 @@ class FoodSearch extends Component {
         {this.state.foodList.length > 0 ? (
           <FoodListTable
             foodList={this.state.foodList}
-            rowClick={this.handleFoodSelect}
+            selectedFoodItems={this.state.selectedFoodItems}
+            rowClick={this.handleRowSelect}
+            rowSelect={this.selectFoodItem}
           />
         ) : null}
         <Confirm 
