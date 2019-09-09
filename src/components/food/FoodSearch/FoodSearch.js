@@ -9,12 +9,13 @@ import styles from './FoodSearch.module.css';
 
 class FoodSearch extends Component {
   state = {
+    activeFood: {},
+    foodList: [],
     loading: false,
-    showConfirm: false,
     message: '',
     searchValue: '',
-    foodList: [],
-    activeFood: {},
+    selectedFoodItems:[],
+    showConfirm: false,
     showModal: false
   };
 
@@ -53,6 +54,15 @@ class FoodSearch extends Component {
       });
     });
   };
+
+  selectFoodItem = event => {
+    this.toggleModal()
+    this.setState(prevState => {
+      let selectedFoodItems = prevState.selectedFoodItems;
+      selectedFoodItems.push(prevState.activeFoodDetails)
+      return {selectedFoodItems}
+    })
+  }
 
   toggleModal = () => {
     this.setState(prevState => {
@@ -93,6 +103,7 @@ class FoodSearch extends Component {
         <FoodDetailsModal
           show={this.state.showModal}
           onClose={this.toggleModal}
+          onSelect={this.selectFoodItem}
         >
           <FoodDetails foodDetails={this.state.activeFoodDetails} />
         </FoodDetailsModal>

@@ -1,4 +1,11 @@
 
+.flex-container {
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
 .mealCalcContainer{
     margin:20px;
     border:2px solid grey;
