@@ -4,6 +4,7 @@ import styles from './App.module.css';
 import TopNav from './components/navs/TopNav';
 import Home from './components/Home/Home';
 import MealCalc from './components/MealCalc/MealCalc';
+import Meal from './components/meal/Meal';
 import Form from './components/forms/Form';
 import FoodSearch from './components/food/FoodSearch/FoodSearch';
 import HoverTest from './components/experimental/HoverTest';
@@ -20,6 +21,7 @@ class App extends Component {
           <Home path="/" />
           <Form path="form" />
           <FoodSearch path="food-search" />
+          <Meal path="meal" />
           <MealCalc path="meal-calc" />
           <HoverTest path="hovertest" />
         </Router>

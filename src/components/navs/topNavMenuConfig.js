@@ -5,6 +5,7 @@ export const menuConfig =
             items: [
                 { to: 'form', text: 'form' },
                 { to: 'food-search', text: 'food-search' },
+                { to: 'meal', text: 'meal' },
                 { to: 'meal-calc', text: 'meal-calc'}
             ]
          },

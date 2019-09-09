@@ -1,13 +1,14 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
-import FoodListTableRow from './FoodListTableRow';
+import MealTableRow from './MealTableRow';
 
-const FoodListTable = props => {
+const MealTable = props => {
 
   return (
     <Table celled selectable>
       <Table.Header>
         <Table.Row>
+          <Table.HeaderCell>fdcId</Table.HeaderCell>
           <Table.HeaderCell>description</Table.HeaderCell>
           <Table.HeaderCell>dataType</Table.HeaderCell>
           <Table.HeaderCell>selected</Table.HeaderCell>
@@ -19,10 +20,10 @@ const FoodListTable = props => {
           let found = props.selectedFoodItems.find( selectedFoodItem => {
             return selectedFoodItem.description === foodItem.description
           })
-          let selected =  found ? 'true' : 'false';
+          let selected =  found ? true : false;
           console.log(`selected: ${selected}`)
           return(
-            <FoodListTableRow
+            <MealTableRow
               key={index}
               rowId={index}
               rowData={foodItem}
@@ -37,4 +38,4 @@ const FoodListTable = props => {
   );
 };
 
-export default FoodListTable;
+export default MealTable;
