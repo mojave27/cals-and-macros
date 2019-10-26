@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Confirm, Input } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import MealTable from '../table/MealTable/MealTable';
 // import FoodDetails from '../../food/FoodItem/FoodDetails';
 // import FoodDetailsModal from '../../modals/FoodDetailsModal';
 import styles from './Meal.module.css';
 
-class FoodSearch extends Component {
+class Meal extends Component {
   state = {
     activeFood: {},
     foodList: [],
@@ -71,10 +71,10 @@ class FoodSearch extends Component {
           onSelect={this.selectFoodItem}
         >
           <FoodDetails foodDetails={this.state.activeFoodDetails} />
-        </FoodDetailsModal> */}
+        </FoodDetailsModal> 
         <Button color='orange' onClick={this.handleClick} disabled={false}>
           search
-        </Button>
+        </Button>*/}
         <br />
           <MealTable
             foodList={this.state.foodList}
@@ -82,6 +82,9 @@ class FoodSearch extends Component {
             rowClick={this.handleRowSelect}
             rowSelect={this.selectFoodItem}
           />
+        <Button color='orange' onClick={this.addFood} >
+          Add Item
+        </Button>
         {/* <Confirm 
             open={this.state.showConfirm} 
             onCancel={this.handleModalCancel} 
@@ -94,4 +97,4 @@ class FoodSearch extends Component {
   }
 }
 
-export default FoodSearch;
+export default Meal;

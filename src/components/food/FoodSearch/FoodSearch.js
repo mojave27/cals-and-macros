@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Confirm, Input } from 'semantic-ui-react';
 import retrieveFoodList from '../../../apis/retrieveFoodList';
 import retrieveFoodItem from '../../../apis/retrieveFoodItem';
+import SelectedFoods from '../../table/SelectedFoods/SelectedFoods';
 import FoodListTable from '../../table/FoodListTable/FoodListTable';
 import FoodDetails from '../../food/FoodItem/FoodDetails';
 import FoodDetailsModal from '../../modals/FoodDetailsModal';
@@ -14,7 +15,7 @@ class FoodSearch extends Component {
     loading: false,
     message: '',
     searchValue: '',
-    selectedFoodItems:[],
+    selectedFoodItems: [],
     showConfirm: false,
     showModal: false
   };
@@ -26,8 +27,12 @@ class FoodSearch extends Component {
     this.setState({ showConfirm: false });
   };
 
-  handleModalCancel = () => { this.setState({showConfirm: false}) }
-  handleModalConfirm = () => { this.setState({showConfirm: false}) }
+  handleModalCancel = () => {
+    this.setState({ showConfirm: false });
+  };
+  handleModalConfirm = () => {
+    this.setState({ showConfirm: false });
+  };
 
   handleInputChange = e => {
     this.setState({ searchValue: e.target.value });
@@ -39,7 +44,7 @@ class FoodSearch extends Component {
   };
 
   handleRowSelect = (rowId, event) => {
-    event.preventDefault()
+    event.preventDefault();
     let updatedResults = this.state.foodList.map(foodItem => {
       let updatedFoodItem = { ...foodItem };
       updatedFoodItem.active = false;
@@ -57,13 +62,13 @@ class FoodSearch extends Component {
   };
 
   selectFoodItem = event => {
-    this.toggleModal()
+    this.toggleModal();
     this.setState(prevState => {
       let selectedFoodItems = prevState.selectedFoodItems;
-      selectedFoodItems.push(prevState.activeFoodDetails)
-      return {selectedFoodItems}
-    })
-  }
+      selectedFoodItems.push(prevState.activeFoodDetails);
+      return { selectedFoodItems };
+    });
+  };
 
   toggleModal = () => {
     this.setState(prevState => {
@@ -72,35 +77,45 @@ class FoodSearch extends Component {
   };
 
   retrieve = () => {
-    retrieveFoodList(this.state.searchValue).then(apiSearchResults => {
-      let foodList = [];
-      let error = true;
-      let message = 'No items found for search term.';
-      let initialFoodList = apiSearchResults.foods;
+    retrieveFoodList(this.state.searchValue)
+      .then(apiSearchResults => {
+        let foodList = [];
+        let error = true;
+        let message = 'No items found for search term.';
+        let initialFoodList = apiSearchResults.foods;
 
-      if (initialFoodList.length > 0) {
-        error = false;
-        message = '';
-        foodList = initialFoodList.map(foodItem => {
-          return {
-            active: false,
-            ...foodItem
-          };
+        if (initialFoodList && initialFoodList.length > 0) {
+          error = false;
+          message = '';
+          foodList = initialFoodList.map(foodItem => {
+            return {
+              active: false,
+              ...foodItem
+            };
+          });
+        }
+
+        this.setState({
+          foodList: foodList,
+          loading: false,
+          showConfirm: error,
+          message: message
         });
-      }
-
-      this.setState({
-        foodList: foodList,
-        loading: false,
-        showConfirm: error,
-        message: message
+      })
+      .catch(error => {
+        console.log(error);
       });
-    });
   };
 
   render() {
     return (
       <div className={styles.container}>
+        <SelectedFoods
+          foodList={this.state.selectedFoodItems}
+          selectedFoodItems={this.state.selectedFoodItems}
+          // rowClick={this.handleRowSelect}
+          rowSelect={this.selectFoodItem}
+        />
         <FoodDetailsModal
           show={this.state.showModal}
           onClose={this.toggleModal}
@@ -130,12 +145,12 @@ class FoodSearch extends Component {
             rowSelect={this.selectFoodItem}
           />
         ) : null}
-        <Confirm 
-            open={this.state.showConfirm} 
-            onCancel={this.handleModalCancel} 
-            onConfirm={this.handleModalConfirm} 
-            content={this.state.message}
-            size='tiny'
+        <Confirm
+          open={this.state.showConfirm}
+          onCancel={this.handleModalCancel}
+          onConfirm={this.handleModalConfirm}
+          content={this.state.message}
+          size='tiny'
         />
       </div>
     );

@@ -8,10 +8,11 @@ const MealTable = props => {
     <Table celled selectable>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>fdcId</Table.HeaderCell>
           <Table.HeaderCell>description</Table.HeaderCell>
-          <Table.HeaderCell>dataType</Table.HeaderCell>
-          <Table.HeaderCell>selected</Table.HeaderCell>
+          <Table.HeaderCell>cals</Table.HeaderCell>
+          <Table.HeaderCell>protein grams</Table.HeaderCell>
+          <Table.HeaderCell>carb grams</Table.HeaderCell>
+          <Table.HeaderCell>fat grams</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 

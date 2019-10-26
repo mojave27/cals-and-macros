@@ -3,10 +3,10 @@ import styles from './FoodDetails.module.css';
 
 const FoodDetails = props => {
   const parseNutrients = (nutrients, name) => {
-    let namedNutrient = nutrients.find(
-      nutrient => nutrient.nutrient.name === name
-    );
-    return namedNutrient.amount;
+    let namedNutrient = nutrients.find( nutrient => {
+      return nutrient.nutrient.name === name
+    });
+    return namedNutrient ? namedNutrient.amount : 0
   };
 
   /* foodNutrients: Array(65)
