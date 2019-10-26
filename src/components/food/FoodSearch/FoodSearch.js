@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Confirm, Input } from 'semantic-ui-react';
+import { Button, Confirm, Divider, Input } from 'semantic-ui-react';
 import retrieveFoodList from '../../../apis/retrieveFoodList';
 import retrieveFoodItem from '../../../apis/retrieveFoodItem';
 import SelectedFoods from '../../table/SelectedFoods/SelectedFoods';
@@ -7,6 +7,7 @@ import FoodListTable from '../../table/FoodListTable/FoodListTable';
 import FoodDetails from '../../food/FoodItem/FoodDetails';
 import FoodDetailsModal from '../../modals/FoodDetailsModal';
 import styles from './FoodSearch.module.css';
+import { axiosFood } from '../../../config/apiConfig';
 
 class FoodSearch extends Component {
   state = {
@@ -107,6 +108,25 @@ class FoodSearch extends Component {
       });
   };
 
+  addFoodtoApp = () => {
+    const url = 'appdb'
+    const foodToAdd = this.state.activeFoodDetails
+    return axiosFood
+    .post(url, foodToAdd)
+    .then( response => {
+      console.log(response)
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleClick();
+    }
+  };
+
   render() {
     return (
       <div className={styles.container}>
@@ -116,10 +136,12 @@ class FoodSearch extends Component {
           // rowClick={this.handleRowSelect}
           rowSelect={this.selectFoodItem}
         />
+        <Divider />
         <FoodDetailsModal
           show={this.state.showModal}
           onClose={this.toggleModal}
           onSelect={this.selectFoodItem}
+          onAddToApp={this.addFoodtoApp}
         >
           <FoodDetails foodDetails={this.state.activeFoodDetails} />
         </FoodDetailsModal>
@@ -131,7 +153,9 @@ class FoodSearch extends Component {
           value={this.state.searchValue}
           onChange={this.handleInputChange}
           className={styles.searchInput}
+          onKeyPress={this.handleKeyPress}
         />
+        {/* <input ref='reference' onKeyPress={(e) => {(e.key === 'Enter' ? doSomething(this.refs.reference.value) : null)}} /> */}
         <br />
         <Button color='orange' onClick={this.handleClick} disabled={false}>
           search

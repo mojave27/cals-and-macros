@@ -2,25 +2,24 @@ import React from "react";
 import { Table } from "semantic-ui-react";
 import SelectedFoodsRow from './SelectedFoodsRow';
 
-const FoodListTable = props => {
+const SelectedFoods = props => {
 
   return (
     <Table celled selectable>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>description</Table.HeaderCell>
-          <Table.HeaderCell>dataType</Table.HeaderCell>
-          {/* <Table.HeaderCell>selected</Table.HeaderCell> */}
+          <Table.HeaderCell>Qty/Unit</Table.HeaderCell>
+          <Table.HeaderCell>Cals</Table.HeaderCell>
+          <Table.HeaderCell>Protein Grams</Table.HeaderCell>
+          <Table.HeaderCell>Carb Grams</Table.HeaderCell>
+          <Table.HeaderCell>Fiber Grams</Table.HeaderCell>
+          <Table.HeaderCell>Fat Grams</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         {props.foodList.map( (foodItem, index) => {
-          // let found = props.selectedFoodItems.find( selectedFoodItem => {
-          //   return selectedFoodItem.description === foodItem.description
-          // })
-          // let selected =  found ? 'true' : 'false';
-          // console.log(`selected: ${selected}`)
           return(
             <SelectedFoodsRow
               key={index}
@@ -28,7 +27,6 @@ const FoodListTable = props => {
               rowData={foodItem}
               onClick={props.rowClick}
               onSelect={props.rowSelect}
-              // selected={selected}
             />
           )
         })}
@@ -37,4 +35,4 @@ const FoodListTable = props => {
   );
 };
 
-export default FoodListTable;
+export default SelectedFoods;
