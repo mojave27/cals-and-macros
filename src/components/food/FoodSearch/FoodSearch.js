@@ -8,6 +8,7 @@ import FoodDetails from '../../food/FoodItem/FoodDetails';
 import FoodDetailsModal from '../../modals/FoodDetailsModal';
 import styles from './FoodSearch.module.css';
 import { axiosFood } from '../../../config/apiConfig';
+import AppContext from '../../context/appContext';
 
 class FoodSearch extends Component {
   state = {
@@ -108,6 +109,12 @@ class FoodSearch extends Component {
       });
   };
 
+  addToMeal = () => {
+    // add selectedFoodItems to meal.
+    console.log(this.state.selectedFoodItems)
+    
+  }
+
   addFoodtoApp = () => {
     const url = 'appdb'
     const foodToAdd = this.state.activeFoodDetails
@@ -129,13 +136,24 @@ class FoodSearch extends Component {
 
   render() {
     return (
+      <AppContext.Consumer>
+      {({meal, updateMeal}) => (
+        // <button
+        //   onClick={toggleTheme}
+        //   style={{backgroundColor: theme.background}}>
+        //   Toggle Theme
+        // </button>
       <div className={styles.container}>
+        <div>meal: {meal.name}</div>
         <SelectedFoods
           foodList={this.state.selectedFoodItems}
           selectedFoodItems={this.state.selectedFoodItems}
           // rowClick={this.handleRowSelect}
           rowSelect={this.selectFoodItem}
         />
+        <Button color='orange' onClick={this.addToMeal} disabled={false}>
+          Add to Meal
+        </Button>
         <Divider />
         <FoodDetailsModal
           show={this.state.showModal}
@@ -177,8 +195,12 @@ class FoodSearch extends Component {
           size='tiny'
         />
       </div>
+      )}
+    </AppContext.Consumer>
     );
   }
 }
 
-export default FoodSearch;
+// FoodSearch.contextType = AppContext
+
+export default FoodSearch
