@@ -8,7 +8,6 @@ import FoodDetails from '../../food/FoodItem/FoodDetails';
 import FoodDetailsModal from '../../modals/FoodDetailsModal';
 import styles from './FoodSearch.module.css';
 import { axiosFood } from '../../../config/apiConfig';
-import AppContext from '../../context/appContext'
 
 class FoodSearch extends Component {
   state = {
@@ -54,21 +53,13 @@ class FoodSearch extends Component {
     });
     updatedResults[rowId].active = true;
     retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
+      this.props.setActiveFood(updatedResults[rowId], foodItem)
       this.setState({
         foodList: updatedResults,
-        activeFood: updatedResults[rowId],
-        activeFoodDetails: foodItem,
+        // activeFood: updatedResults[rowId],
+        // activeFoodDetails: foodItem,
         showModal: true
       });
-    });
-  };
-
-  selectFoodItem = event => {
-    this.toggleModal();
-    this.setState(prevState => {
-      let selectedFoodItems = prevState.selectedFoodItems;
-      selectedFoodItems.push(prevState.activeFoodDetails);
-      return { selectedFoodItems };
     });
   };
 
@@ -109,11 +100,6 @@ class FoodSearch extends Component {
       });
   };
 
-  addToMeal = () => {
-    // add selectedFoodItems to meal.
-    console.log(this.state.selectedFoodItems)
-
-  }
 
   addFoodtoApp = () => {
     const url = 'appdb'
@@ -136,27 +122,14 @@ class FoodSearch extends Component {
 
   render() {
     return (
-      <AppContext.Consumer>
-        { (meal, updateMeal) => (
       <div className={styles.container}>
-        <div>meal: {meal.name}</div>
-        <SelectedFoods
-          foodList={this.state.selectedFoodItems}
-          selectedFoodItems={this.state.selectedFoodItems}
-          // rowClick={this.handleRowSelect}
-          rowSelect={this.selectFoodItem}
-        />
-        <Button color='orange' onClick={this.addToMeal} disabled={false}>
-          Add to Meal
-        </Button>
-        <Divider />
         <FoodDetailsModal
           show={this.state.showModal}
           onClose={this.toggleModal}
-          onSelect={this.selectFoodItem}
+          onSelect={this.props.addToMeal}
           onAddToApp={this.addFoodtoApp}
         >
-          <FoodDetails foodDetails={this.state.activeFoodDetails} />
+          <FoodDetails foodDetails={this.props.activeFoodDetails} />
         </FoodDetailsModal>
         <Input
           loading={this.state.loading}
@@ -189,8 +162,7 @@ class FoodSearch extends Component {
           content={this.state.message}
           size='tiny'
         />
-      </div>)}
-    </AppContext.Consumer> 
+      </div>
     );
   }
 }

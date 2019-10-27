@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Divider } from 'semantic-ui-react';
 import MealTable from '../table/MealTable/MealTable';
+import ReusableFoodSearch from '../food/FoodSearch/ReusableFoodSearch'
 // import FoodDetails from '../../food/FoodItem/FoodDetails';
 // import FoodDetailsModal from '../../modals/FoodDetailsModal';
 import styles from './Meal.module.css';
@@ -14,7 +15,8 @@ class Meal extends Component {
     searchValue: '',
     selectedFoodItems:[],
     showConfirm: false,
-    showModal: false
+    showModal: false,
+    showSearch: false
   };
 
   handleModalCancel = () => {
@@ -46,8 +48,15 @@ class Meal extends Component {
     updatedResults[rowId].active = true;
   };
 
-  selectFoodItem = event => {
-    this.toggleModal()
+  setActiveFood = (foodItem, foodDetails) => {
+    this.setState({
+      activeFood: foodItem, 
+      activeFoodDetails: foodDetails
+    })
+  }
+
+  addToMeal = event => {
+    this.toggleSearch()
     this.setState(prevState => {
       let selectedFoodItems = prevState.selectedFoodItems;
       selectedFoodItems.push(prevState.activeFoodDetails)
@@ -55,36 +64,35 @@ class Meal extends Component {
     })
   }
 
-  toggleModal = () => {
+  toggleSearch = () => {
     this.setState(prevState => {
-      return { showModal: !prevState.showModal };
+      return { showSearch: !prevState.showSearch };
     });
-  };
+  }
 
 
   render() {
     return (
       <div className={styles.container}>
-        {/* <FoodDetailsModal
-          show={this.state.showModal}
-          onClose={this.toggleModal}
-          onSelect={this.selectFoodItem}
-        >
-          <FoodDetails foodDetails={this.state.activeFoodDetails} />
-        </FoodDetailsModal> 
-        <Button color='orange' onClick={this.handleClick} disabled={false}>
-          search
-        </Button>*/}
-        <br />
           <MealTable
-            foodList={this.state.foodList}
-            selectedFoodItems={this.state.selectedFoodItems}
+            foodList={this.state.selectedFoodItems}
             rowClick={this.handleRowSelect}
             rowSelect={this.selectFoodItem}
           />
-        <Button color='orange' onClick={this.addFood} >
+        <Button color='orange' onClick={this.toggleSearch} >
           Add Item
         </Button>
+        <Divider />
+        {this.state.showSearch
+         ? 
+          <ReusableFoodSearch 
+            addToMeal={this.addToMeal}
+            setActiveFood={this.setActiveFood}
+            activeFood={this.state.activeFood}
+            activeFoodDetails={this.state.activeFoodDetails}
+          />
+         : null
+        }
         {/* <Confirm 
             open={this.state.showConfirm} 
             onCancel={this.handleModalCancel} 
