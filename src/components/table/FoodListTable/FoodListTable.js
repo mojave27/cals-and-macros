@@ -20,7 +20,6 @@ const FoodListTable = props => {
             return selectedFoodItem.description === foodItem.description
           })
           let selected =  found ? 'true' : 'false';
-          console.log(`selected: ${selected}`)
           return(
             <FoodListTableRow
               key={index}

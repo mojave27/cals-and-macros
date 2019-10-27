@@ -102,7 +102,7 @@ class FoodSearch extends Component {
 
   addFoodtoApp = () => {
     const url = 'appdb'
-    const foodToAdd = this.state.activeFoodDetails
+    const foodToAdd = this.props.activeFoodDetails
     return axiosFood
     .post(url, foodToAdd)
     .then( response => {

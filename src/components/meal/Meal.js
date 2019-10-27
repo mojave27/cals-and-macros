@@ -1,32 +1,34 @@
-import React, { Component } from 'react'
-import { Button, Divider } from 'semantic-ui-react'
-import MealTable from '../table/MealTable/MealTable'
-import ReusableFoodSearch from '../food/FoodSearch/ReusableFoodSearch'
-import styles from './Meal.module.css'
+import React, { Component } from 'react';
+import { Button, Divider, Input } from 'semantic-ui-react';
+import MealTable from '../table/MealTable/MealTable';
+import ReusableFoodSearch from '../food/FoodSearch/ReusableFoodSearch';
+import saveMeal from '../../apis/saveMeal';
+import styles from './Meal.module.css';
 
 class Meal extends Component {
   state = {
     activeFood: {},
-    foodList: [],
     loading: false,
+    meal: {
+      foodList: [],
+      name: ''
+    },
     message: '',
     searchValue: '',
     showConfirm: false,
     showModal: false,
     showSearch: false
-  }
+  };
 
-
-  handleRowSelect = (rowId, event) => {
-  }
+  handleRowSelect = (rowId, event) => {};
 
   setActiveFood = (foodItem, foodDetails) => {
-    const parsedFoodDetails = this.parseFood(foodDetails)
+    const parsedFoodDetails = this.parseFood(foodDetails);
     this.setState({
-      activeFood: foodItem, 
+      activeFood: foodItem,
       activeFoodDetails: parsedFoodDetails
-    })
-  }
+    });
+  };
 
   /* export this section *********************************** */
   parseFood = food => {
@@ -39,59 +41,98 @@ class Meal extends Component {
       nutrients: {
         calories: this.parseNutrients(food.foodNutrients, 'Energy'),
         protein: this.parseNutrients(food.foodNutrients, 'Protein'),
-        carbohydrate: this.parseNutrients(food.foodNutrients, 'Carbohydrate, by difference'),
+        carbohydrate: this.parseNutrients(
+          food.foodNutrients,
+          'Carbohydrate, by difference'
+        ),
         fiber: this.parseNutrients(food.foodNutrients, 'Fiber, total dietary'),
         fat: this.parseNutrients(food.foodNutrients, 'Total lipid (fat)')
       }
-    }
-    return parsedFood
-  }
+    };
+    return parsedFood;
+  };
   parseNutrients = (nutrients, name) => {
-    let namedNutrient = nutrients.find( nutrient => {
-      return nutrient.nutrient.name === name
+    let namedNutrient = nutrients.find(nutrient => {
+      return nutrient.nutrient.name === name;
     });
-    return namedNutrient ? namedNutrient.amount : 0
-  }
+    return namedNutrient ? namedNutrient.amount : 0;
+  };
   /* ******************************************************** */
 
-  addToMeal = event => {
-    this.toggleSearch()
+  addToMeal = () => {
+    this.toggleSearch();
     this.setState(prevState => {
-      let foodList = prevState.foodList;
-      foodList.push(prevState.activeFoodDetails)
-      return {foodList}
-    })
+      let meal = prevState.meal;
+      meal.foodList.push(prevState.activeFoodDetails);
+      return { meal };
+    });
+  };
+
+  saveMeal = () => {
+    saveMeal(this.state.meal)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  updateMealName = name => {
+    let meal = this.state.meal
   }
 
   toggleSearch = () => {
     this.setState(prevState => {
       return { showSearch: !prevState.showSearch };
     });
+  };
+
+  toggleMealModal = () => {
+    this.setState(prevState => {
+      return { showMealModal: !prevState.showMealModal };
+    });
   }
 
+  handleInputChange = event => {
+    let name = event.target.value
+    this.setState(prevState => {
+      let meal = prevState.meal
+      meal.name = name
+      return { meal }
+    });
+  };
 
   render() {
     return (
       <div className={styles.container}>
-          <MealTable
-            foodList={this.state.foodList}
-            rowClick={this.handleRowSelect}
-            rowSelect={this.selectFoodItem}
-          />
-        <Button color='orange' onClick={this.toggleSearch} >
+        <Input 
+          label={'meal name'}
+          value={this.state.meal.name} 
+          onChange={this.handleInputChange}
+        />
+        <MealTable
+          foodList={this.state.meal.foodList}
+          rowClick={this.handleRowSelect}
+          rowSelect={this.selectFoodItem}
+        />
+        <Button color='orange' onClick={this.toggleSearch}>
           Add Item
         </Button>
+        <Button color='green' onClick={this.saveMeal}>
+          Save Meal
+        </Button>
+
         <Divider />
-        {this.state.showSearch
-         ? 
-          <ReusableFoodSearch 
+
+        {this.state.showSearch ? (
+          <ReusableFoodSearch
             addToMeal={this.addToMeal}
             setActiveFood={this.setActiveFood}
             activeFood={this.state.activeFood}
             activeFoodDetails={this.state.activeFoodDetails}
           />
-         : null
-        }
+        ) : null}
       </div>
     );
   }
