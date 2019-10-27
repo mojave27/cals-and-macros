@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Confirm, Divider, Input } from 'semantic-ui-react';
+import { Button, Confirm, Input } from 'semantic-ui-react';
 import retrieveFoodList from '../../../apis/retrieveFoodList';
 import retrieveFoodItem from '../../../apis/retrieveFoodItem';
-import SelectedFoods from '../../table/SelectedFoods/SelectedFoods';
 import FoodListTable from '../../table/FoodListTable/FoodListTable';
 import FoodDetails from '../../food/FoodItem/FoodDetails';
 import FoodDetailsModal from '../../modals/FoodDetailsModal';
@@ -141,7 +140,6 @@ class FoodSearch extends Component {
           className={styles.searchInput}
           onKeyPress={this.handleKeyPress}
         />
-        {/* <input ref='reference' onKeyPress={(e) => {(e.key === 'Enter' ? doSomething(this.refs.reference.value) : null)}} /> */}
         <br />
         <Button color='orange' onClick={this.handleClick} disabled={false}>
           search
@@ -166,7 +164,5 @@ class FoodSearch extends Component {
     );
   }
 }
-
-// FoodSearch.contextType = AppContext
 
 export default FoodSearch

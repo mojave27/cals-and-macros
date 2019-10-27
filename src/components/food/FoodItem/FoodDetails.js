@@ -2,24 +2,6 @@ import React from 'react';
 import styles from './FoodDetails.module.css';
 
 const FoodDetails = props => {
-  const parseNutrients = (nutrients, name) => {
-    let namedNutrient = nutrients.find( nutrient => {
-      return nutrient.nutrient.name === name
-    });
-    return namedNutrient ? namedNutrient.amount : 0
-  };
-
-  /* foodNutrients: Array(65)
-    0:
-    amount: 1.09 <-- amount of this nutrient per 100g
-    id: 2643067
-    nutrient:
-     id: 1003
-     name: "Protein" <-- the nutrient type
-     number: "203"
-     rank: 600
-     unitName: "g"
-*/
 
   return (
     <React.Fragment>
@@ -36,28 +18,19 @@ const FoodDetails = props => {
         <div className={styles.flexContainer}>
           <div className={styles.cell}>100 grams</div>
           <div className={styles.cell}>
-            {parseNutrients(props.foodDetails.foodNutrients, 'Energy')}
+            {props.foodDetails.nutrients.calories}
           </div>
           <div className={styles.cell}>
-            {parseNutrients(props.foodDetails.foodNutrients, 'Protein')}
+            {props.foodDetails.nutrients.protein}
           </div>
           <div className={styles.cell}>
-            {parseNutrients(
-              props.foodDetails.foodNutrients,
-              'Carbohydrate, by difference'
-            )}
+            {props.foodDetails.nutrients.carbohydrate}
           </div>
           <div className={styles.cell}>
-            {parseNutrients(
-              props.foodDetails.foodNutrients,
-              'Fiber, total dietary'
-            )}
+            {props.foodDetails.nutrients.fiber}
           </div>
           <div className={styles.cell}>
-            {parseNutrients(
-              props.foodDetails.foodNutrients,
-              'Total lipid (fat)'
-            )}
+            {props.foodDetails.nutrients.fat}
           </div>
         </div>
       </div>

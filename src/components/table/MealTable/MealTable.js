@@ -29,9 +29,39 @@ const MealTable = props => {
             />
           )
         })}
+        <SummaryRow />
+        <MacrosRow />
       </Table.Body>
     </Table>
   );
 };
+
+const SummaryRow = props => {
+  return (
+    <Table.Row>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+    </Table.Row>
+  );
+}
+
+const MacrosRow = props => {
+  return (
+    <Table.Row>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+    </Table.Row>
+  );
+}
 
 export default MealTable;

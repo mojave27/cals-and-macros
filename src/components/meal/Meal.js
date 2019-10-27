@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { Button, Divider } from 'semantic-ui-react';
-import MealTable from '../table/MealTable/MealTable';
+import React, { Component } from 'react'
+import { Button, Divider } from 'semantic-ui-react'
+import MealTable from '../table/MealTable/MealTable'
 import ReusableFoodSearch from '../food/FoodSearch/ReusableFoodSearch'
-// import FoodDetails from '../../food/FoodItem/FoodDetails';
-// import FoodDetailsModal from '../../modals/FoodDetailsModal';
-import styles from './Meal.module.css';
+import styles from './Meal.module.css'
 
 class Meal extends Component {
   state = {
@@ -13,54 +11,55 @@ class Meal extends Component {
     loading: false,
     message: '',
     searchValue: '',
-    selectedFoodItems:[],
     showConfirm: false,
     showModal: false,
     showSearch: false
-  };
+  }
 
-  handleModalCancel = () => {
-    this.setState({ showConfirm: false });
-  };
-  handleModalConfirm = () => {
-    this.setState({ showConfirm: false });
-  };
-
-  handleModalCancel = () => { this.setState({showConfirm: false}) }
-  handleModalConfirm = () => { this.setState({showConfirm: false}) }
-
-  handleInputChange = e => {
-    this.setState({ searchValue: e.target.value });
-  };
-
-  handleClick = () => {
-    this.setState({ loading: true });
-    this.retrieve();
-  };
 
   handleRowSelect = (rowId, event) => {
-    event.preventDefault()
-    let updatedResults = this.state.foodList.map(foodItem => {
-      let updatedFoodItem = { ...foodItem };
-      updatedFoodItem.active = false;
-      return updatedFoodItem;
-    });
-    updatedResults[rowId].active = true;
-  };
+  }
 
   setActiveFood = (foodItem, foodDetails) => {
+    const parsedFoodDetails = this.parseFood(foodDetails)
     this.setState({
       activeFood: foodItem, 
-      activeFoodDetails: foodDetails
+      activeFoodDetails: parsedFoodDetails
     })
   }
+
+  /* export this section *********************************** */
+  parseFood = food => {
+    let parsedFood = {
+      description: food.description,
+      dataType: food.dataType,
+      fdcId: food.fdcId,
+      ndbNumber: food.ndbNumber,
+      category: { ...food.foodCategory },
+      nutrients: {
+        calories: this.parseNutrients(food.foodNutrients, 'Energy'),
+        protein: this.parseNutrients(food.foodNutrients, 'Protein'),
+        carbohydrate: this.parseNutrients(food.foodNutrients, 'Carbohydrate, by difference'),
+        fiber: this.parseNutrients(food.foodNutrients, 'Fiber, total dietary'),
+        fat: this.parseNutrients(food.foodNutrients, 'Total lipid (fat)')
+      }
+    }
+    return parsedFood
+  }
+  parseNutrients = (nutrients, name) => {
+    let namedNutrient = nutrients.find( nutrient => {
+      return nutrient.nutrient.name === name
+    });
+    return namedNutrient ? namedNutrient.amount : 0
+  }
+  /* ******************************************************** */
 
   addToMeal = event => {
     this.toggleSearch()
     this.setState(prevState => {
-      let selectedFoodItems = prevState.selectedFoodItems;
-      selectedFoodItems.push(prevState.activeFoodDetails)
-      return {selectedFoodItems}
+      let foodList = prevState.foodList;
+      foodList.push(prevState.activeFoodDetails)
+      return {foodList}
     })
   }
 
@@ -75,7 +74,7 @@ class Meal extends Component {
     return (
       <div className={styles.container}>
           <MealTable
-            foodList={this.state.selectedFoodItems}
+            foodList={this.state.foodList}
             rowClick={this.handleRowSelect}
             rowSelect={this.selectFoodItem}
           />
@@ -93,13 +92,6 @@ class Meal extends Component {
           />
          : null
         }
-        {/* <Confirm 
-            open={this.state.showConfirm} 
-            onCancel={this.handleModalCancel} 
-            onConfirm={this.handleModalConfirm} 
-            content={this.state.message}
-            size='tiny'
-        /> */}
       </div>
     );
   }
