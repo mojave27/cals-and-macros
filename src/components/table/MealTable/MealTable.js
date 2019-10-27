@@ -1,36 +1,31 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
-import MealTableRow from './MealTableRow';
+import SelectedFoodsRow from '../SelectedFoods/SelectedFoodsRow'
 
 const MealTable = props => {
-
   return (
-    <Table celled selectable>
+    <Table compact celled selectable>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>description</Table.HeaderCell>
-          <Table.HeaderCell>cals</Table.HeaderCell>
-          <Table.HeaderCell>protein grams</Table.HeaderCell>
-          <Table.HeaderCell>carb grams</Table.HeaderCell>
-          <Table.HeaderCell>fat grams</Table.HeaderCell>
+          <Table.HeaderCell>Qty/Unit</Table.HeaderCell>
+          <Table.HeaderCell>Cals</Table.HeaderCell>
+          <Table.HeaderCell>Protein Grams</Table.HeaderCell>
+          <Table.HeaderCell>Carb Grams</Table.HeaderCell>
+          <Table.HeaderCell>Fiber Grams</Table.HeaderCell>
+          <Table.HeaderCell>Fat Grams</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         {props.foodList.map( (foodItem, index) => {
-          let found = props.selectedFoodItems.find( selectedFoodItem => {
-            return selectedFoodItem.description === foodItem.description
-          })
-          let selected =  found ? true : false;
-          console.log(`selected: ${selected}`)
           return(
-            <MealTableRow
+            <SelectedFoodsRow
               key={index}
               rowId={index}
               rowData={foodItem}
               onClick={props.rowClick}
               onSelect={props.rowSelect}
-              selected={selected}
             />
           )
         })}

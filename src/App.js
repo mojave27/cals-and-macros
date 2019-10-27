@@ -10,29 +10,26 @@ import FoodSearch from './components/food/FoodSearch/FoodSearch';
 import HoverTest from './components/experimental/HoverTest';
 import { Router } from '@reach/router';
 
-import AppContext from './components/context/appContext';
+let AppContext = React.createContext()
 
 class App extends Component {
-  state = { 
-    meal: {} 
-  }
+  state = { meal: {} }
 
-  updateMeal = mealUpdate => {
-    let currentMeal = this.state.meal
-    let newMeal = { ...currentMeal, ...mealUpdate}
-    this.setState({meal: newMeal})
+  updateMeal = update => {
+    let meal = this.state.meal
+    this.setState({meal: meal})
   }
 
   render() {
     return (
+      <AppContext.Provider value={
+        this.state.meal,
+        this.updateMeal
+      } >
       <div className={styles.App}>
         <div>
           <TopNav />
         </div>
-        <AppContext.Provider value={{ 
-          meal: this.state.meal,
-          updateMeal: this.updateMeal
-        }}>
           <Router>
             {/*  Any child or child of a child component in here can access 'AppContext'*/}
             <Home path='/' />
@@ -42,8 +39,8 @@ class App extends Component {
             <MealCalc path='meal-calc' />
             <HoverTest path='hovertest' />
           </Router>
-        </AppContext.Provider>
       </div>
+      </AppContext.Provider>
     );
   }
 }
