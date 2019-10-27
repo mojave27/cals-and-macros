@@ -10,7 +10,6 @@ import FoodSearch from './components/food/FoodSearch/FoodSearch';
 import HoverTest from './components/experimental/HoverTest';
 import { Router } from '@reach/router';
 
-let AppContext = React.createContext()
 
 class App extends Component {
   state = { meal: {} }
@@ -22,10 +21,6 @@ class App extends Component {
 
   render() {
     return (
-      <AppContext.Provider value={
-        this.state.meal,
-        this.updateMeal
-      } >
       <div className={styles.App}>
         <div>
           <TopNav />
@@ -40,7 +35,6 @@ class App extends Component {
             <HoverTest path='hovertest' />
           </Router>
       </div>
-      </AppContext.Provider>
     );
   }
 }

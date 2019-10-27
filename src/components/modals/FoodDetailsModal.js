@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './FoodDetailsModal.module.css';
+import styles from './Modal.module.css';
 
 class Modal extends React.Component {
   render() {
