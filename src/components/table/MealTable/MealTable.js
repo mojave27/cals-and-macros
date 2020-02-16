@@ -8,7 +8,8 @@ const MealTable = props => {
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>description</Table.HeaderCell>
-          <Table.HeaderCell>Qty/Unit</Table.HeaderCell>
+          <Table.HeaderCell>Qty</Table.HeaderCell>
+          <Table.HeaderCell>Unit</Table.HeaderCell>
           <Table.HeaderCell>Cals</Table.HeaderCell>
           <Table.HeaderCell>Protein Grams</Table.HeaderCell>
           <Table.HeaderCell>Carb Grams</Table.HeaderCell>
@@ -26,11 +27,12 @@ const MealTable = props => {
               rowData={foodItem}
               onClick={props.rowClick}
               onSelect={props.rowSelect}
+              onQuantityChange={props.onQuantityChange}
             />
           );
         })}
       </Table.Body>
-      {props.foodList.size > 0
+      {props.foodList.length > 0
         ? <Table.Footer>
             <SummaryRow foodList={props.foodList} />
             <MacrosRow foodList={props.foodList} />
@@ -54,7 +56,7 @@ const SummaryRow = props => {
 
   return (
     <Table.Row>
-      <Table.HeaderCell colSpan={2}>{'Totals'}</Table.HeaderCell>
+      <Table.HeaderCell colSpan={3}>{'Totals'}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('calories')}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('protein')}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('carbohydrate')}</Table.HeaderCell>
@@ -93,7 +95,7 @@ const MacrosRow = props => {
 
   return (
       <Table.Row>
-        <Table.HeaderCell colSpan={3} >{'Macro Breakdown'}</Table.HeaderCell>
+        <Table.HeaderCell colSpan={4} >{'Macro Breakdown'}</Table.HeaderCell>
         <Table.HeaderCell>{percentIt('protein')} %</Table.HeaderCell>
         <Table.HeaderCell>{percentIt('carbohydrate')} %</Table.HeaderCell>
         <Table.HeaderCell>0 %</Table.HeaderCell>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Divider, Input } from 'semantic-ui-react';
+import { Button, Divider, Dropdown, Input } from 'semantic-ui-react';
 import MealTable from '../table/MealTable/MealTable';
 import ReusableFoodSearch from '../food/FoodSearch/ReusableFoodSearch';
 import saveMeal from '../../apis/saveMeal';
@@ -33,6 +33,8 @@ class Meal extends Component {
   /* export this section *********************************** */
   parseFood = food => {
     let parsedFood = {
+      quantity: 100,
+      unit: 'grams',
       description: food.description,
       dataType: food.dataType,
       fdcId: food.fdcId,
@@ -103,9 +105,41 @@ class Meal extends Component {
     });
   };
 
+  handleQuantityChange = (event, data) => {
+    let quantity = event.target.value
+    console.log(data)
+    console.log(quantity)
+    // get the foodItem from foodList by fdcId (can be found in data.fdcId)
+
+    // update the value of foodList item quantity
+
+    // set it all back into state
+    // this.setState()
+  }
+
+  // handleDropdownChange = (event,data) => {
+  //   console.log(event)
+  //   console.log(data)
+  // }
+
+  // ddOptions = [
+  //   { key: 0, text: 'grams', value: 0, onClick: this.handleDropdownChange },
+  //   { key: 1, text: 'ounces', value: 1, onClick: this.handleDropdownChange },
+  //   { key: 2, text: 'whole', value: 2, onClick: this.handleDropdownChange }
+  // ];
+
   render() {
     return (
       <div className={styles.container}>
+        {/* <Dropdown
+          placeholder='placeholder'
+          fluid
+          selection
+          options={this.ddOptions}
+          onChange={this.handleDropdownChange}
+          onClick={this.handleDropdownChange}
+          scrolling
+        />   */}
         <Input 
           label={'meal name'}
           value={this.state.meal.name} 
@@ -115,6 +149,7 @@ class Meal extends Component {
           foodList={this.state.meal.foodList}
           rowClick={this.handleRowSelect}
           rowSelect={this.selectFoodItem}
+          onQuantityChange={this.handleQuantityChange}
         />
         <Button color='orange' onClick={this.toggleSearch}>
           Add Item
