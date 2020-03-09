@@ -1,0 +1,41 @@
+.default {
+    background-color: gainsboro;
+    color: #333;
+    font-weight: 700;
+    font-size: 1rem;
+    width: 100px;
+    margin: 0 .25em 0 0;
+    padding: .78571429em 1.5em .78571429em;
+    min-height: 1em;
+    border-radius: .28571429rem;
+    line-height: 1em;
+    font-style: normal
+}
+
+.sm {
+    background-color: #f2711c;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    width: 75px;
+    margin: 0 .25em 0 0;
+    padding: .571429em 1.0em .571429em;
+    min-height: .75em;
+    border-radius: .28571429rem;
+    line-height: 1em;
+    font-style: normal;
+}
+
+.md {
+    background-color: #f2711c;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    width: 100px;
+    margin: 0 .25em 0 0;
+    padding: .78571429em 1.5em .78571429em;
+    min-height: 1em;
+    border-radius: .28571429rem;
+    line-height: 1em;
+    font-style: normal;
+}

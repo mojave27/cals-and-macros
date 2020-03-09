@@ -14,12 +14,14 @@ const MealTable = props => {
           <Table.HeaderCell>Protein Grams</Table.HeaderCell>
           <Table.HeaderCell>Carb Grams</Table.HeaderCell>
           <Table.HeaderCell>Fiber Grams</Table.HeaderCell>
+          <Table.HeaderCell>Net Carb Grams</Table.HeaderCell>
           <Table.HeaderCell>Fat Grams</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         {props.foodList.map((foodItem, index) => {
+          console.log(foodItem)
           return (
             <SelectedFoodsRow
               key={index}
@@ -61,6 +63,7 @@ const SummaryRow = props => {
       <Table.HeaderCell>{sumIt('protein')}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('carbohydrate')}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('fiber')}</Table.HeaderCell>
+      <Table.HeaderCell>{sumIt('netCarbs')}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('fat')}</Table.HeaderCell>
     </Table.Row>
   );
@@ -99,6 +102,7 @@ const MacrosRow = props => {
         <Table.HeaderCell>{percentIt('protein')} %</Table.HeaderCell>
         <Table.HeaderCell>{percentIt('carbohydrate')} %</Table.HeaderCell>
         <Table.HeaderCell>0 %</Table.HeaderCell>
+        <Table.HeaderCell>{percentIt('netCarbs')} %</Table.HeaderCell>
         <Table.HeaderCell>{percentIt('fat')} %</Table.HeaderCell>
       </Table.Row>
   );

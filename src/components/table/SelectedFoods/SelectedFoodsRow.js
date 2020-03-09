@@ -44,6 +44,7 @@ const SelectedFoodsRow = props => {
       <Table.Cell>{props.rowData.nutrients.protein}</Table.Cell>
       <Table.Cell>{props.rowData.nutrients.carbohydrate}</Table.Cell>
       <Table.Cell>{props.rowData.nutrients.fiber}</Table.Cell>
+      <Table.Cell>{props.rowData.nutrients.netCarbs}</Table.Cell>
       <Table.Cell>{props.rowData.nutrients.fat}</Table.Cell>
     </Table.Row>
   );
