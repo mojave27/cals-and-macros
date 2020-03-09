@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Divider, Dropdown, Input } from 'semantic-ui-react'
+import { Button, Divider, Input } from 'semantic-ui-react'
 import MealTable from '../table/MealTable/MealTable'
 import ReusableFoodSearch from '../food/FoodSearch/ReusableFoodSearch'
 import saveMeal from '../../apis/saveMeal'
@@ -88,12 +88,6 @@ class Meal extends Component {
       }
     }
     return parsedFood
-  }
-
-  calcNetCarbs = (carb, fiber) => {
-    console.log(`carb: ${carb}`)
-    console.log(`fiber: ${fiber}`)
-    return carb - fiber
   }
 
   parseNutrients = (nutrients, name) => {
@@ -191,6 +185,15 @@ class Meal extends Component {
     }
   }
 
+  deleteRow = (event) => {
+    let id = event.target.id
+    this.setState( prevState => {
+      let meal = prevState.meal
+      meal.foodList.splice(id,1)
+      return { meal } 
+    })
+  }
+
   // handleDropdownChange = (event,data) => {
   //   console.log(event)
   //   console.log(data)
@@ -232,6 +235,7 @@ class Meal extends Component {
           foodList={this.state.meal.foodList}
           rowClick={this.handleRowSelect}
           rowSelect={this.selectFoodItem}
+          rowDelete={this.deleteRow}
           onQuantityChange={this.handleQuantityChange}
         />
         <Button color='orange' onClick={this.toggleSearch}>

@@ -7,6 +7,7 @@ const MealTable = props => {
     <Table compact celled selectable >
       <Table.Header>
         <Table.Row>
+          <Table.HeaderCell>{' '}</Table.HeaderCell>
           <Table.HeaderCell>description</Table.HeaderCell>
           <Table.HeaderCell>Qty</Table.HeaderCell>
           <Table.HeaderCell>Unit</Table.HeaderCell>
@@ -28,6 +29,7 @@ const MealTable = props => {
               rowId={index}
               rowData={foodItem}
               onClick={props.rowClick}
+              rowDelete={props.rowDelete}
               onSelect={props.rowSelect}
               onQuantityChange={props.onQuantityChange}
             />

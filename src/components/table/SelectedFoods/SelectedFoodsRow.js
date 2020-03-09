@@ -20,6 +20,7 @@ const SelectedFoodsRow = props => {
 
   return (
     <Table.Row onClick={rowClick} active={props.rowData.active}>
+      <Table.Cell id={props.rowId} onClick={props.rowDelete}>{'X'}</Table.Cell>
       <Table.Cell>{props.rowData.description}</Table.Cell>
       <Table.Cell>
         <Input 
