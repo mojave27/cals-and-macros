@@ -181,6 +181,7 @@ class Meal extends Component {
       protein: Math.ceil(nutrients.protein * multiplier * 100) / 100,
       carbohydrate: Math.ceil(nutrients.carbohydrate * multiplier * 100) / 100,
       fiber: Math.ceil(nutrients.fiber * multiplier * 100) / 100,
+      netCarbs: Math.ceil(nutrients.netCarbs * multiplier * 100) / 100,
       fat: Math.ceil(nutrients.fat * multiplier * 100) / 100
     }
   }

@@ -60,7 +60,7 @@ const SummaryRow = props => {
 
   return (
     <Table.Row>
-      <Table.HeaderCell colSpan={3}>{'Totals'}</Table.HeaderCell>
+      <Table.HeaderCell colSpan={4}>{'Totals'}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('calories')}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('protein')}</Table.HeaderCell>
       <Table.HeaderCell>{sumIt('carbohydrate')}</Table.HeaderCell>
@@ -100,12 +100,14 @@ const MacrosRow = props => {
 
   return (
       <Table.Row>
-        <Table.HeaderCell colSpan={4} >{'Macro Breakdown'}</Table.HeaderCell>
-        <Table.HeaderCell>{percentIt('protein')} %</Table.HeaderCell>
+        <Table.HeaderCell colSpan={5} >{'Macro Breakdown'}</Table.HeaderCell>
+        <Table.HeaderCell><span style={{fontWeight:'bold', color:'red'}}>{percentIt('protein')} %</span></Table.HeaderCell>
         <Table.HeaderCell>{percentIt('carbohydrate')} %</Table.HeaderCell>
         <Table.HeaderCell>0 %</Table.HeaderCell>
-        <Table.HeaderCell>{percentIt('netCarbs')} %</Table.HeaderCell>
-        <Table.HeaderCell>{percentIt('fat')} %</Table.HeaderCell>
+        {/* <Table.HeaderCell>{percentIt('netCarbs')} %</Table.HeaderCell> */}
+        <Table.HeaderCell><span style={{fontWeight:'bold', color:'red'}}>{percentIt('netCarbs')} %</span></Table.HeaderCell>
+        {/* <Table.HeaderCell>{percentIt('fat')} %</Table.HeaderCell> */}
+        <Table.HeaderCell><span style={{fontWeight:'bold', color:'red'}}>{percentIt('fat')} %</span></Table.HeaderCell>
       </Table.Row>
   );
 };
