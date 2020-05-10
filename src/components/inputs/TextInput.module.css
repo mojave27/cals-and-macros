@@ -1,0 +1,6 @@
+.textInput {
+    border: 1px lightgrey;
+    border-radius: 2px;
+    line-height: 1.1em;
+    padding: 7px;
+}
