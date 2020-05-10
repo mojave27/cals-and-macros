@@ -152,7 +152,10 @@ class Meal extends Component {
   }
 
   handleQuantityChange = (event, data) => {
-    let quantity = event.target.value
+    console.log(`data`)
+    console.log(data)
+    // let quantity = event.target.value
+    let quantity = data
     let id = event.target.id
     let foodItemIndex = this.state.meal.foodList.findIndex(
       food => Number(food.fdcId) === Number(id)

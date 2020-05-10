@@ -73,7 +73,7 @@ const SummaryRow = props => {
 
 const MacrosRow = props => {
   // props should include the nutrient name
-  let calsPerGram = new Map([['protein', 4], ['carbohydrate', 4], ['fat', 9]]);
+  let calsPerGram = new Map([['protein', 4], ['carbohydrate', 4], ['fat', 9], ['netCarbs', 4]]);
 
   /* this is same fx as 'sumIt' */
   const sumCals = () => {
