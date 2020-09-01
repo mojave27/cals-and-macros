@@ -1,29 +1,49 @@
-import { axiosFood } from '../config/apiConfig';
+import { axiosFood } from '../config/apiConfig'
 
 const retrieveFoodItem = id => {
-  const url = `foodItems/${id}`;
+  const url = `foodItems/${id}`
   // console.log(`url: ${url}`)
   return axiosFood
     .get(url)
     .then(function(response) {
       // handle success
-      // return parseResponse(response);
-      return response.data
+      return parseResponse(response, id);
+      // console.log(JSON.stringify(response.data))
+      // console.log(response.data)
+      // return response.data
     })
     .catch(function(error) {
       // handle error
-      console.log(`[ui - retrieveFoodItem] api error: ${error}`);
-      return [];
-    });
-};
-
-const parseResponse = (response) => {
-  // console.log({response})
-  // {"foodClass":"Survey","description":"Beef and broccoli","foodNutrients":[{"type":"FoodNutrient","id":2439487,"nutrient":{"id":1003,"number":"203","name":"Protein"
-  // response.data.foodNutrients.forEach( nutrient => {
-    // console.log(JSON.stringify(nutrient))
-  // })
-  return response
+      console.log(`[ui - retrieveFoodItem] api error: ${error}`)
+      return []
+    })
 }
 
-export default retrieveFoodItem;
+// move this to an external module ?
+const parseResponse = (response, fdcId) => {
+  const targetNutrients = [
+    { id: 1008, name: 'calories' },
+    { id: 1003, name: 'protein' },
+    { id: 1004, name: 'fat' },
+    { id: 1005, name: 'carbohydrates' },
+    { id: 1079, name: 'fiber' }
+  ]
+  const foodItem = response.data
+  let transformedFoodItem = {
+    fdcId,
+    description: foodItem.description,
+    nutrients: []
+  }
+  foodItem.foodNutrients.forEach(nutrient => {
+    targetNutrients.forEach(target => {
+      if (nutrient.nutrient.id === target.id) {
+        nutrient.nutrient.name = target.name
+        transformedFoodItem.nutrients.push(nutrient.nutrient)
+      }
+    })
+  })
+  console.log(JSON.stringify(transformedFoodItem))
+  return transformedFoodItem
+}
+
+export default retrieveFoodItem

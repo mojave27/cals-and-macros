@@ -1,10 +1,10 @@
-import React from 'react';
-import { Table } from 'semantic-ui-react';
+import React from 'react'
+import { Table } from 'semantic-ui-react'
 
 const FoodListTableRow = props => {
   const rowClick = e => {
-    const { onClick, rowId } = props;
-    onClick(rowId, e);
+    const { onClick, rowId } = props
+    onClick(rowId, e)
   };
 
   const renderSelected = selected => {

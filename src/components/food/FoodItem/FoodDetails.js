@@ -3,10 +3,16 @@ import styles from './FoodDetails.module.css';
 
 const FoodDetails = props => {
 
+  const debugStuff = foodDetails => {
+    console.log(JSON.stringify(foodDetails))
+    return (<div>{''}</div>)
+  }
+
   return (
     <React.Fragment>
       <div className={styles.titleBar}>{props.foodDetails.description}</div>
-      <div className={styles.foodDetailsContainer}>
+      {debugStuff(props.foodDetails)}
+      {/* <div className={styles.foodDetailsContainer}>
         <div className={styles.flexContainer}>
           <div className={styles.leadCell}>Qty/Unit</div>
           <div className={styles.leadCell}>Cals</div>
@@ -33,7 +39,7 @@ const FoodDetails = props => {
             {props.foodDetails.nutrients.fat}
           </div>
         </div>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 };
