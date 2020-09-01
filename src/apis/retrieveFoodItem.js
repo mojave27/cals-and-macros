@@ -2,18 +2,12 @@ import { axiosFood } from '../config/apiConfig'
 
 const retrieveFoodItem = id => {
   const url = `foodItems/${id}`
-  // console.log(`url: ${url}`)
   return axiosFood
     .get(url)
     .then(function(response) {
-      // handle success
       return parseResponse(response, id);
-      // console.log(JSON.stringify(response.data))
-      // console.log(response.data)
-      // return response.data
     })
     .catch(function(error) {
-      // handle error
       console.log(`[ui - retrieveFoodItem] api error: ${error}`)
       return []
     })
@@ -21,6 +15,7 @@ const retrieveFoodItem = id => {
 
 // move this to an external module ?
 const parseResponse = (response, fdcId) => {
+  // targetNutrients ids are based on the ids used in the gov api
   const targetNutrients = [
     { id: 1008, name: 'calories' },
     { id: 1003, name: 'protein' },
@@ -32,13 +27,15 @@ const parseResponse = (response, fdcId) => {
   let transformedFoodItem = {
     fdcId,
     description: foodItem.description,
-    nutrients: []
+    nutrients: {}
   }
   foodItem.foodNutrients.forEach(nutrient => {
     targetNutrients.forEach(target => {
       if (nutrient.nutrient.id === target.id) {
         nutrient.nutrient.name = target.name
-        transformedFoodItem.nutrients.push(nutrient.nutrient)
+        // transformedFoodItem.nutrients.push(nutrient.nutrient)
+        transformedFoodItem.nutrients[target.name] = nutrient.nutrient
+        transformedFoodItem.nutrients[target.name].amount = nutrient.amount
       }
     })
   })

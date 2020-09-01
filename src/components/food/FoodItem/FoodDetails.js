@@ -12,7 +12,7 @@ const FoodDetails = props => {
     <React.Fragment>
       <div className={styles.titleBar}>{props.foodDetails.description}</div>
       {debugStuff(props.foodDetails)}
-      {/* <div className={styles.foodDetailsContainer}>
+      <div className={styles.foodDetailsContainer}>
         <div className={styles.flexContainer}>
           <div className={styles.leadCell}>Qty/Unit</div>
           <div className={styles.leadCell}>Cals</div>
@@ -24,22 +24,22 @@ const FoodDetails = props => {
         <div className={styles.flexContainer}>
           <div className={styles.cell}>100 grams</div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.calories}
+            {props.foodDetails.nutrients.calories.amount}
           </div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.protein}
+            {props.foodDetails.nutrients.protein.amount}
           </div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.carbohydrate}
+            {props.foodDetails.nutrients.carbohydrates.amount}
           </div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.fiber}
+            {props.foodDetails.nutrients.fiber.amount}
           </div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.fat}
+            {props.foodDetails.nutrients.fat.amount}
           </div>
         </div>
-      </div> */}
+      </div>
     </React.Fragment>
   );
 };
