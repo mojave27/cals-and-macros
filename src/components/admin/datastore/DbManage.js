@@ -18,10 +18,8 @@ const foodItemHeaders = [
 
 const DbManage = () => {
   const [foodList, setFoodList] = useState([])
-  // const [loading, setLoading] = useState(false)
   const [selected, setSelected] = useState([])
   const [showModal, setShowModal] = useState(false)
-  // const [activeFood, setActiveFood] = useState({})
 
   useEffect(() => {
     fetchMyAPI()
@@ -75,7 +73,6 @@ const DbManage = () => {
         onClose={toggleModal}
       >
         <Form onSubmit={handleFormSubmit} />
-        {/* <BasicForm onSubmit={handleFormSubmit} /> */}
       </StandardModal>
       <br />
       {foodList.length > 0 ? (

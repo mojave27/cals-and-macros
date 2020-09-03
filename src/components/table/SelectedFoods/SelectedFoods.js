@@ -4,6 +4,80 @@ import SelectedFoodsRow from './SelectedFoodsRow';
 
 const SelectedFoods = props => {
 
+  const sumCals = foodList => {
+    let sum = 0
+    foodList.forEach( foodItem => {
+      sum += Number(foodItem.calories)
+    })
+    return sum
+  }
+  const sumProtein = foodList => {
+    let sum = 0
+    foodList.forEach( foodItem => {
+      sum += Number(foodItem.proteinGrams)
+    })
+    return sum
+  }
+  const sumCarbs = foodList => {
+    let sum = 0
+    foodList.forEach( foodItem => {
+      sum += Number(foodItem.carbGrams)
+    })
+    return sum
+  }
+  const sumFat = foodList => {
+    let sum = 0
+    foodList.forEach( foodItem => {
+      sum += Number(foodItem.fatGrams)
+    })
+    return sum
+  }
+
+  const macroCalcProtein = foodList => {
+    if(foodList.length == 0){ return 0.0}
+    let totalCals = sumCals(foodList)
+    let multiplier = 4
+    let totalGrams = 0
+    foodList.forEach( foodItem => {
+      totalGrams += Number(foodItem.proteinGrams)
+    })
+
+    let percent = (totalGrams * multiplier)/totalCals
+    return percentageAsString(percent)
+  }
+
+  const macroCalcCarbs = foodList => {
+    if(foodList.length == 0){ return 0.0}
+    let totalCals = sumCals(foodList)
+    let multiplier = 4
+    let totalGrams = 0
+    foodList.forEach( foodItem => {
+      totalGrams += Number(foodItem.carbGrams)
+    })
+
+    let percentageAsDecimal = (totalGrams * multiplier)/totalCals
+    // let percentageAsNumber = `${(percentageAsDecimal * 100).toFixed(1)}%`
+    return percentageAsString(percentageAsDecimal)
+  }
+
+  const macroCalcFat = foodList => {
+    if(foodList.length == 0){ return 0.0}
+    let totalCals = sumCals(foodList)
+    let multiplier = 9
+    let totalGrams = 0
+    foodList.forEach( foodItem => {
+      totalGrams += Number(foodItem.fatGrams)
+    })
+
+    let percent = (totalGrams * multiplier)/totalCals
+    return percentageAsString(percent)
+  }
+
+  const percentageAsString = percentageAsDecimal => {
+    let percentageString = `${(percentageAsDecimal * 100).toFixed(1)}%`
+    return percentageString
+  }
+
   return (
     <Table celled selectable>
       <Table.Header>
@@ -32,6 +106,24 @@ const SelectedFoods = props => {
             />
           )
         })}
+        {/* sums row */}
+        <Table.Row>
+          <Table.Cell colSpan={4} style={{backgroundColor:'#eee'}} />
+          <Table.Cell style={{color:'orange'}}>{sumCals(props.foodList)}</Table.Cell>
+          <Table.Cell style={{color:'orange'}}>{sumProtein(props.foodList)}</Table.Cell>
+          <Table.Cell style={{color:'orange'}}>{sumCarbs(props.foodList)}</Table.Cell>
+          <Table.Cell></Table.Cell>
+          <Table.Cell style={{color:'orange'}}>{sumFat(props.foodList)}</Table.Cell>
+        </Table.Row>
+        {/* macros row */}
+        <Table.Row>
+          <Table.Cell colSpan={4} style={{backgroundColor:'#eee'}} />
+          <Table.Cell />
+          <Table.Cell style={{color:'orange'}}>{macroCalcProtein(props.foodList)}</Table.Cell>
+          <Table.Cell style={{color:'orange'}}>{macroCalcCarbs(props.foodList)}</Table.Cell>
+          <Table.Cell></Table.Cell>
+          <Table.Cell style={{color:'orange'}}>{macroCalcFat(props.foodList)}</Table.Cell>
+        </Table.Row>
       </Table.Body>
     </Table>
   );
