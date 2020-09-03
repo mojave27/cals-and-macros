@@ -8,8 +8,10 @@ const SelectedFoods = props => {
     <Table celled selectable>
       <Table.Header>
         <Table.Row>
+          <Table.HeaderCell>delete</Table.HeaderCell>
           <Table.HeaderCell>description</Table.HeaderCell>
-          <Table.HeaderCell>Qty/Unit</Table.HeaderCell>
+          <Table.HeaderCell>Qty</Table.HeaderCell>
+          <Table.HeaderCell>Unit</Table.HeaderCell>
           <Table.HeaderCell>Cals</Table.HeaderCell>
           <Table.HeaderCell>Protein Grams</Table.HeaderCell>
           <Table.HeaderCell>Carb Grams</Table.HeaderCell>
@@ -25,8 +27,8 @@ const SelectedFoods = props => {
               key={index}
               rowId={index}
               rowData={foodItem}
-              onClick={props.rowClick}
-              onSelect={props.rowSelect}
+              rowDelete={props.rowDelete}
+              rowSelect={props.rowSelect}
             />
           )
         })}

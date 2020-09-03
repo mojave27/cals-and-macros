@@ -28,19 +28,16 @@ const SimpleForm = () => {
         <Form className={styles.form} onSubmit={formik.handleSubmit}>
           <div>
             <label htmlFor='firstName'>First Name</label>
-            {/* <Field name="firstName" type="text" /> */}
             <Field name='firstName' as={TextInput} placeholder='First Name' />
             <ErrorMessage name='firstName' />
           </div>
           <div>
             <label htmlFor='lastName'>Last Name</label>
-            {/* <Field name="lastName" type="text" /> */}
             <Field name='lastName' as={TextInput} placeholder='Last Name' />
             <ErrorMessage name='lastName' />
           </div>
           <div>
             <label htmlFor='email'>Email Address</label>
-            {/* <Field name="email" type="text" /> */}
             <Field name='email' as={TextInput} placeholder='Email Address' />
             <ErrorMessage name='email' />
           </div>

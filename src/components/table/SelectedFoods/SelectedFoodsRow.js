@@ -5,8 +5,13 @@ const SelectedFoodsRow = props => {
   let [ units, setUnits ] = useState('grams')
 
   const rowClick = e => {
-    const { onClick, rowId } = props
-    onClick(rowId, e)
+    const { rowSelect, rowId } = props
+    rowSelect(rowId, e)
+  }
+
+  const rowDelete = e => {
+    e.stopPropagation()
+    props.rowDelete(e)
   }
 
   const handleDropdownChange = event => {
@@ -16,6 +21,9 @@ const SelectedFoodsRow = props => {
   }
 
   const calcDefaultValue = qty => {
+    if(typeof qty === undefined){
+      return 100
+    }
     let updatedQty = qty
     if (units === 'ounces') {
       updatedQty = qty/28.35
@@ -38,7 +46,7 @@ const SelectedFoodsRow = props => {
 
   return (
     <Table.Row onClick={rowClick} active={props.rowData.active}>
-      <Table.Cell id={props.rowId} onClick={props.rowDelete}>
+      <Table.Cell id={props.rowData.id} onClick={rowDelete}>
         {'X'}
       </Table.Cell>
       <Table.Cell>{props.rowData.description}</Table.Cell>
@@ -53,18 +61,20 @@ const SelectedFoodsRow = props => {
       </Table.Cell>
       {/* <Table.Cell>{'grams'}</Table.Cell> */}
       <Table.Cell>
-        <select id='units' onChange={handleDropdownChange}>
-          <option value='grams'>grams</option>
-          <option value='ounces'>ounces</option>
+        {props.rowData.unit}
+        {/* <select id='units' onChange={handleDropdownChange}> */}
+          {/* <option value='grams'>grams</option> */}
+          {/* <option value='ounces'>ounces</option> */}
           {/* <option value='whole'>whole</option> */}
-        </select>
+        {/* </select> */}
       </Table.Cell>
-      <Table.Cell>{props.rowData.nutrients.calories}</Table.Cell>
-      <Table.Cell>{props.rowData.nutrients.protein}</Table.Cell>
-      <Table.Cell>{props.rowData.nutrients.carbohydrate}</Table.Cell>
-      <Table.Cell>{props.rowData.nutrients.fiber}</Table.Cell>
-      <Table.Cell>{props.rowData.nutrients.netCarbs}</Table.Cell>
-      <Table.Cell>{props.rowData.nutrients.fat}</Table.Cell>
+      <Table.Cell>{props.rowData.calories}</Table.Cell>
+      <Table.Cell>{props.rowData.proteinGrams}</Table.Cell>
+      <Table.Cell>{props.rowData.carbGrams}</Table.Cell>
+      {/* <Table.Cell>{props.rowData.fiberGrams}</Table.Cell> */}
+      {/* <Table.Cell>{props.rowData.nutrients.netCarbs}</Table.Cell> */}
+      <Table.Cell>{0}</Table.Cell>
+      <Table.Cell>{props.rowData.fatGrams}</Table.Cell>
     </Table.Row>
   )
 }

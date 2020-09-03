@@ -9,12 +9,11 @@ export const menuConfig =
                 { to: 'meal-calc', text: 'meal-calc'}
             ]
          },
-        // { name: 'other',
-        //     items: [
-        //         { to: 'form', text: 'form' },
-        //         { to: 'hovertest', text: 'hover test' }
-        //     ]
-        //  },
+        { name: 'manage',
+            items: [
+                { to: 'manage-db', text: 'manage db' }
+            ]
+         },
         // { name: 'test-menu',
         //     items: [
         //         { to: 'form', text: 'form' },

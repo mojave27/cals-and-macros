@@ -9,6 +9,7 @@ import Form from './components/forms/Form';
 import FoodSearch from './components/food/FoodSearch/FoodSearch';
 import HoverTest from './components/experimental/HoverTest';
 import { Router } from '@reach/router';
+import DbManage from './components/admin/datastore/DbManage';
 
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
             <Meal path='meal' />
             <MealCalc path='meal-calc' />
             <HoverTest path='hovertest' />
+            <DbManage path='manage-db' />
           </Router>
       </div>
     );

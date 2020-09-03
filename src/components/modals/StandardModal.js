@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Modal.module.css';
+import PropTypes from 'prop-types'
+import styles from './StandardModal.module.css'
+import { Icon } from 'semantic-ui-react'
 
 class Modal extends React.Component {
   render() {
@@ -11,12 +12,8 @@ class Modal extends React.Component {
     return (
       <div className={styles.backdrop}>
         <div className={styles.modal}>
+          <Icon className={styles.close} size={'large'} name='close' onClick={this.props.onClose} />
           {this.props.children}
-          <div className='footer'>
-            <button className={styles.close} onClick={this.props.onClose}>Close</button>
-            <button className={styles.close} onClick={this.props.onSelect}>Select</button>
-            {/* <button className={styles.close} onClick={this.props.onAddToApp}>Add to App</button> */}
-          </div>
         </div>
       </div>
     );

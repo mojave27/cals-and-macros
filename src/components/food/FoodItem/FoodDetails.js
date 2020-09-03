@@ -1,5 +1,6 @@
-import React from 'react';
-import styles from './FoodDetails.module.css';
+import React from 'react'
+import styles from './FoodDetails.module.css'
+import { get } from 'lodash'
 
 const FoodDetails = props => {
 
@@ -24,19 +25,19 @@ const FoodDetails = props => {
         <div className={styles.flexContainer}>
           <div className={styles.cell}>100 grams</div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.calories.amount}
+            {props.foodDetails.calories}
           </div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.protein.amount}
+            {props.foodDetails.proteinGrams}
           </div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.carbohydrates.amount}
+            {props.foodDetails.carbGrams}
           </div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.fiber.amount}
+            {get(props, 'foodDetails.fiber', 0)}
           </div>
           <div className={styles.cell}>
-            {props.foodDetails.nutrients.fat.amount}
+            {props.foodDetails.fatGrams}
           </div>
         </div>
       </div>

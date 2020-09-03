@@ -9,6 +9,7 @@ import FoodDetailsModal from '../../modals/FoodDetailsModal'
 import styles from './FoodSearch.module.css'
 import { axiosFood } from '../../../config/apiConfig'
 import AppContext from '../../context/appContext'
+import { findIndexOfId, removeItemFromArrayByIndex } from '../../util/ArrayUtils'
 
 class FoodSearch extends Component {
   state = {
@@ -38,6 +39,17 @@ class FoodSearch extends Component {
     this.retrieve()
   }
 
+  handleRowDelete = event => {
+    // console.log(event.target.id)
+    const id = event.target.id
+    const index = findIndexOfId(id, this.state.selectedFoodItems)
+    console.log(`deleting ${JSON.stringify(this.state.selectedFoodItems[index])}`)
+    this.setState(prevState => {
+      let newSelectedItems = removeItemFromArrayByIndex(index, prevState.selectedFoodItems)
+      return({selectedFoodItems: newSelectedItems})
+    })
+  }
+
   handleRowSelect = (rowId, event) => {
     event.preventDefault()
     // set all rows in list to inactive (unselected)
@@ -48,14 +60,14 @@ class FoodSearch extends Component {
     })
     // set the selected row as active
     updatedResults[rowId].active = true
-    retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
+    // retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
       this.setState({
         foodList: updatedResults,
         activeFood: updatedResults[rowId],
-        activeFoodDetails: foodItem,
+        activeFoodDetails: updatedResults[rowId],
         showModal: true
       })
-    })
+    // })
   }
 
   selectFoodItem = event => {
@@ -105,21 +117,17 @@ class FoodSearch extends Component {
         let foodList = []
         let error = true
         let message = 'No items found for search term.'
-        let initialFoodList = apiSearchResults.foods
+        // let initialFoodList = apiSearchResults.foods
+        let initialFoodList = apiSearchResults
+        console.log(initialFoodList)
 
         if (initialFoodList && initialFoodList.length > 0) {
           error = false
           message = ''
           foodList = initialFoodList.map( (foodItem,index) => {
-            // let transformedFoodItem = this.transformFoodItem(foodItem)
-            // if(index === 0){
-            //   console.log(foodItem)
-            //   console.log(JSON.stringify(foodItem))
-            // }
             return {
               active: false,
               ...foodItem
-              // ...transformedFoodItem
             }
           })
         }
@@ -139,6 +147,11 @@ class FoodSearch extends Component {
   addToMeal = () => {
     // add selectedFoodItems to meal.
     console.log(this.state.selectedFoodItems)
+    this.setState( prevState => {
+      let items = prevState.selectedFoodItems
+      items.push(this.state.activeFood)
+      return { ...prevState, selectedFoodItems: items}
+    })
   }
 
   addFoodtoApp = () => {
@@ -169,7 +182,7 @@ class FoodSearch extends Component {
             <SelectedFoods
               foodList={this.state.selectedFoodItems}
               selectedFoodItems={this.state.selectedFoodItems}
-              // rowClick={this.handleRowSelect}
+              rowDelete={this.handleRowDelete}
               rowSelect={this.selectFoodItem}
             />
             <Button color='orange' onClick={this.addToMeal} disabled={false}>

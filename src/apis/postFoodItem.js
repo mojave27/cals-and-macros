@@ -1,37 +1,26 @@
 // import axios from "axios";
 import { axiosFood } from '../config/apiConfig';
 
-const retrieveFoodList = searchTerm => {
+const postFoodItem = foodItem => {
   const url = 'foodItems'
+  const data = {...foodItem}
+
+  console.log(JSON.stringify(foodItem))
 
   return axiosFood
-    .get(url)
+    .post(url, data)
     .then(function(response) {
-      // console.log(response.data)
+      console.log(response.data)
       // const data = parseResponse(response)
       return response.data
     })
     .catch(function(error) {
       console.log(`[ui - retrieveFoodList] api error: ${error}`);
       return [];
-    });
+    })
 
 }
-// const retrieveFoodList = searchTerm => {
-//   const searchData = { "requireAllWords":true, "generalSearchInput":searchTerm }
-//   const url = 'foodItems'
 
-//   return axiosFood
-//     .post(url, searchData)
-//     .then(function(response) {
-//       const data = parseResponse(response)
-//       return data
-//     })
-//     .catch(function(error) {
-//       console.log(`[ui - retrieveFoodList] api error: ${error}`);
-//       return [];
-//     });
-// };
 
 const parseResponse = (response) => {
     const responseData = response.data.response
@@ -44,4 +33,4 @@ const parseResponse = (response) => {
     return data;
 }
 
-export default retrieveFoodList;
+export { postFoodItem }

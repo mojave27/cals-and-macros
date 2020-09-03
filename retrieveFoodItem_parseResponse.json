@@ -1,0 +1,115 @@
+{
+  "fdcId": 174030,
+  "description": "Beef, ground, 90% lean meat / 10% fat, raw",
+  "nutrients": [{
+    "type": "FoodNutrient",
+    "id": 1825870,
+    "nutrient": {
+      "id": 1008,
+      "number": "208",
+      "name": "Energy",
+      "rank": 300,
+      "unitName": "kcal"
+    },
+    "dataPoints": 0,
+    "foodNutrientDerivation": {
+      "id": 49,
+      "code": "NC",
+      "description": "Calculated",
+      "foodNutrientSource": {
+        "id": 2,
+        "code": "4",
+        "description": "Calculated or imputed"
+      }
+    },
+    "amount": 176
+  }, {
+    "type": "FoodNutrient",
+    "id": 1825838,
+    "nutrient": {
+      "id": 1003,
+      "number": "203",
+      "name": "Protein",
+      "rank": 600,
+      "unitName": "g"
+    },
+    "dataPoints": 72,
+    "foodNutrientDerivation": {
+      "id": 3,
+      "code": "AR",
+      "description": "Analytical data; derived by linear regression",
+      "foodNutrientSource": {
+        "id": 1,
+        "code": "1",
+        "description": "Analytical or derived from analytical"
+      }
+    },
+    "amount": 20
+  }, {
+    "type": "FoodNutrient",
+    "id": 1825826,
+    "nutrient": {
+      "id": 1004,
+      "number": "204",
+      "name": "Total lipid (fat)",
+      "rank": 800,
+      "unitName": "g"
+    },
+    "dataPoints": 72,
+    "foodNutrientDerivation": {
+      "id": 3,
+      "code": "AR",
+      "description": "Analytical data; derived by linear regression",
+      "foodNutrientSource": {
+        "id": 1,
+        "code": "1",
+        "description": "Analytical or derived from analytical"
+      }
+    },
+    "amount": 10
+  }, {
+    "type": "FoodNutrient",
+    "id": 1825827,
+    "nutrient": {
+      "id": 1005,
+      "number": "205",
+      "name": "Carbohydrate, by difference",
+      "rank": 1110,
+      "unitName": "g"
+    },
+    "dataPoints": 0,
+    "foodNutrientDerivation": {
+      "id": 68,
+      "code": "Z",
+      "description": "Assumed zero (Insignificant amount or not naturally occurring in a food, such as fiber in meat)",
+      "foodNutrientSource": {
+        "id": 5,
+        "code": "7",
+        "description": "Assumed zero"
+      }
+    },
+    "amount": 0
+  }, {
+    "type": "FoodNutrient",
+    "id": 1825841,
+    "nutrient": {
+      "id": 1079,
+      "number": "291",
+      "name": "Fiber, total dietary",
+      "rank": 1200,
+      "unitName": "g"
+    },
+    "dataPoints": 0,
+    "foodNutrientDerivation": {
+      "id": 68,
+      "code": "Z",
+      "description": "Assumed zero (Insignificant amount or not naturally occurring in a food, such as fiber in meat)",
+      "foodNutrientSource": {
+        "id": 5,
+        "code": "7",
+        "description": "Assumed zero"
+      }
+    },
+    "amount": 0
+  }]
+}
