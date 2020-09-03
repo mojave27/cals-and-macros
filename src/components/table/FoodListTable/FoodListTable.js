@@ -5,12 +5,18 @@ import FoodListTableRow from './FoodListTableRow';
 const FoodListTable = props => {
 
   return (
-    <Table celled selectable>
+    <Table celled >
       <Table.Header>
         <Table.Row>
+          <Table.HeaderCell />
           <Table.HeaderCell>description</Table.HeaderCell>
-          <Table.HeaderCell>dataType</Table.HeaderCell>
-          <Table.HeaderCell>selected</Table.HeaderCell>
+          <Table.HeaderCell>Qty</Table.HeaderCell>
+          <Table.HeaderCell>Unit</Table.HeaderCell>
+          <Table.HeaderCell>Cals</Table.HeaderCell>
+          <Table.HeaderCell>Protein Grams</Table.HeaderCell>
+          <Table.HeaderCell>Carb Grams</Table.HeaderCell>
+          <Table.HeaderCell>Fiber Grams</Table.HeaderCell>
+          <Table.HeaderCell>Fat Grams</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 

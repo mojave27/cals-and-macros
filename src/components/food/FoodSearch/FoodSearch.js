@@ -42,36 +42,44 @@ class FoodSearch extends Component {
   handleRowDelete = event => {
     // console.log(event.target.id)
     const id = event.target.id
+    console.log(`id: ${id}`)
     const index = findIndexOfId(id, this.state.selectedFoodItems)
     console.log(`deleting ${JSON.stringify(this.state.selectedFoodItems[index])}`)
     this.setState(prevState => {
+      console.log(prevState.selectedFoodItems)
       let newSelectedItems = removeItemFromArrayByIndex(index, prevState.selectedFoodItems)
+      console.log(newSelectedItems)
       return({selectedFoodItems: newSelectedItems})
     })
   }
 
   handleRowSelect = (rowId, event) => {
     event.preventDefault()
-    // set all rows in list to inactive (unselected)
-    let updatedResults = this.state.foodList.map(foodItem => {
-      let updatedFoodItem = { ...foodItem }
-      updatedFoodItem.active = false
-      return updatedFoodItem
+    this.setState(prevState => {
+      let selectedFoodItems = prevState.selectedFoodItems
+      selectedFoodItems.push(prevState.foodList[rowId])
+      return { selectedFoodItems }
     })
+    // set all rows in list to inactive (unselected)
+    // let updatedResults = this.state.foodList.map(foodItem => {
+    //   let updatedFoodItem = { ...foodItem }
+    //   updatedFoodItem.active = false
+    //   return updatedFoodItem
+    // })
     // set the selected row as active
-    updatedResults[rowId].active = true
-    // retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
-      this.setState({
-        foodList: updatedResults,
-        activeFood: updatedResults[rowId],
-        activeFoodDetails: updatedResults[rowId],
-        showModal: true
-      })
+    // updatedResults[rowId].active = true
+    // // retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
+    //   this.setState({
+    //     foodList: updatedResults,
+    //     activeFood: updatedResults[rowId],
+    //     activeFoodDetails: updatedResults[rowId],
+    //     showModal: true
+    //   })
     // })
   }
 
   selectFoodItem = event => {
-    this.toggleModal()
+    // this.toggleModal()
     this.setState(prevState => {
       let selectedFoodItems = prevState.selectedFoodItems
       selectedFoodItems.push(prevState.activeFoodDetails)

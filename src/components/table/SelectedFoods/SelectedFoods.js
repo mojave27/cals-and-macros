@@ -79,7 +79,7 @@ const SelectedFoods = props => {
   }
 
   return (
-    <Table celled selectable>
+    <Table celled >
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>delete</Table.HeaderCell>
@@ -102,7 +102,6 @@ const SelectedFoods = props => {
               rowId={index}
               rowData={foodItem}
               rowDelete={props.rowDelete}
-              rowSelect={props.rowSelect}
             />
           )
         })}

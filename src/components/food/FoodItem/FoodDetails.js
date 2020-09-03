@@ -5,7 +5,7 @@ import { get } from 'lodash'
 const FoodDetails = props => {
 
   const debugStuff = foodDetails => {
-    console.log(JSON.stringify(foodDetails))
+    // console.log(JSON.stringify(foodDetails))
     return (<div>{''}</div>)
   }
 

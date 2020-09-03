@@ -31,7 +31,8 @@ export let sortByStringProperty = (arrayOfObjects, stringProperty, ignoreCase) =
  * @returns new list with item removed
  */
 export let removeItemFromArrayByIndex = (index, list) => {
-  return list.splice(index,1)
+  list.splice(index,1)
+  return list
 }
 
 /** id, list  */
