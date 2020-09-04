@@ -52,6 +52,38 @@ class Meal extends Component {
     })
   }
 
+  tweakRowUp = id => {
+    this.setState(prevState => {
+      let updatedMeal = prevState.meal
+      const index = findIndexOfId(id, updatedMeal.foodList)
+      let multiplier = (Number(updatedMeal.foodList[index].quantity) + 1) / Number(updatedMeal.foodList[index].quantity)
+
+      let foodItem = cloneDeep(updatedMeal.foodList[index])
+
+      foodItem.quantity = Number(foodItem.quantity) + 1
+  
+      let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
+      updatedMeal.foodList[index] = updatedFoodItem
+      return { meal: updatedMeal }
+    })
+  }
+
+  tweakRowDown = id => {
+    this.setState(prevState => {
+      let updatedMeal = prevState.meal
+      const index = findIndexOfId(id, updatedMeal.foodList)
+      let multiplier = (Number(updatedMeal.foodList[index].quantity) - 1) / Number(updatedMeal.foodList[index].quantity)
+
+      let foodItem = cloneDeep(updatedMeal.foodList[index])
+
+      foodItem.quantity = Number(foodItem.quantity) - 1
+  
+      let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
+      updatedMeal.foodList[index] = updatedFoodItem
+      return { meal: updatedMeal }
+    })
+  }
+
   handleRowSelect = (rowId, event) => {
     event.preventDefault()
     this.setState(prevState => {
@@ -61,55 +93,10 @@ class Meal extends Component {
     })
   }
 
-  setActiveFood = (foodItem, foodDetails) => {
-    const parsedFoodDetails = this.parseFood(foodDetails)
-    this.setState({
-      activeFood: foodItem,
-      activeFoodDetails: parsedFoodDetails
-    })
-  }
 
-  /* export this section *********************************** */
-  parseFood = food => {
-    let carbohydrate = this.parseNutrients(
-      food.foodNutrients,
-      'Carbohydrate, by difference'
-    )
-    let fiber = this.parseNutrients(food.foodNutrients, 'Fiber, total dietary')
-
-    let parsedFood = {
-      quantity: 100,
-      unit: 'grams',
-      description: food.description,
-      dataType: food.dataType,
-      fdcId: food.fdcId,
-      ndbNumber: food.ndbNumber,
-      category: { ...food.foodCategory },
-      nutrients: {
-        calories: this.parseNutrients(food.foodNutrients, 'Energy'),
-        protein: this.parseNutrients(food.foodNutrients, 'Protein'),
-        carbohydrate: carbohydrate,
-        fiber: fiber,
-        netCarbs: carbohydrate - fiber,
-        fat: this.parseNutrients(food.foodNutrients, 'Total lipid (fat)')
-      }
-    }
-    return parsedFood
-  }
-
-  parseNutrients = (nutrients, name) => {
-    let namedNutrient = nutrients.find(nutrient => {
-      return nutrient.nutrient.name === name
-    })
-    // console.log(namedNutrient)
-    let returnValue = namedNutrient ? namedNutrient.amount : 0
-    console.log(returnValue)
-    return namedNutrient ? namedNutrient.amount : 0
-  }
   /* ******************************************************** */
 
-  addToMeal = (foodItem) => {
-    // this.toggleSearch()
+  addToMeal = foodItem => {
     this.setState(prevState => {
       let meal = prevState.meal
       meal.foodList.push(foodItem)
@@ -121,6 +108,7 @@ class Meal extends Component {
     saveMeal(this.state.meal)
       .then(response => {
         console.log(response)
+        this.setState({ meal: response.data })
       })
       .catch(error => {
         console.log(error)
@@ -159,57 +147,50 @@ class Meal extends Component {
   }
 
   handleQuantityChange = (event, data) => {
-    console.log(`data`)
-    console.log(data)
-    // let quantity = event.target.value
     let quantity = data
     let id = event.target.id
     let foodItemIndex = this.state.meal.foodList.findIndex(
-      food => Number(food.fdcId) === Number(id)
+      food => Number(food.id) === Number(id)
     )
     let foodItem = cloneDeep(this.state.meal.foodList[foodItemIndex])
-    let multiplier = quantity / foodItem.quantity
 
+    let multiplier = quantity / foodItem.quantity
     foodItem.quantity = quantity
 
-    let updatedNutrients = this.updateNutrients(foodItem.nutrients, multiplier)
-    foodItem.nutrients = { ...updatedNutrients }
+    let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
 
     this.setState(prevState => {
       let meal = prevState.meal
-      meal.foodList[foodItemIndex] = foodItem
+      meal.foodList[foodItemIndex] = updatedFoodItem
       return { meal }
     })
   }
 
-  changeAllQuantities = () => {}
-
-  updateNutrients = (nutrients, multiplier) => {
+  updateNutrients = (foodItem, multiplier) => {
     return {
-      // calories: Math.ceil(num * 100) / 100
-      calories: Math.ceil(nutrients.calories * multiplier * 100) / 100,
-      protein: Math.ceil(nutrients.protein * multiplier * 100) / 100,
-      carbohydrate: Math.ceil(nutrients.carbohydrate * multiplier * 100) / 100,
-      fiber: Math.ceil(nutrients.fiber * multiplier * 100) / 100,
-      netCarbs: Math.ceil(nutrients.netCarbs * multiplier * 100) / 100,
-      fat: Math.ceil(nutrients.fat * multiplier * 100) / 100
+      ...foodItem,
+      calories: Math.ceil(foodItem.calories * multiplier * 100) / 100,
+      proteinGrams: Math.ceil(foodItem.proteinGrams * multiplier * 100) / 100,
+      carbGrams: Math.ceil(foodItem.carbGrams * multiplier * 100) / 100,
+      fiberGrams: Math.ceil(foodItem.fiberGrams * multiplier * 100) / 100,
+      // netCarbs: Math.ceil(foodItem.netCarbs * multiplier * 100) / 100,
+      fatGrams: Math.ceil(foodItem.fatGrams * multiplier * 100) / 100
     }
   }
 
-  deleteRow = (event) => {
+  deleteRow = event => {
     let id = event.target.id
     let index = findIndexOfId(id, this.state.meal.foodList)
-    this.setState( prevState => {
+    this.setState(prevState => {
       let meal = prevState.meal
-      meal.foodList.splice(index,1)
-      return { meal } 
+      meal.foodList.splice(index, 1)
+      return { meal }
     })
   }
 
   render() {
     return (
       <div className={styles.container}>
-
         <Input
           label={'meal name'}
           value={this.state.meal.name}
@@ -230,6 +211,8 @@ class Meal extends Component {
           rowSelect={this.selectFoodItem}
           rowDelete={this.deleteRow}
           onQuantityChange={this.handleQuantityChange}
+          tweakUp={this.tweakRowUp}
+          tweakDown={this.tweakRowDown}
         />
         <Button color='orange' onClick={this.toggleSearch}>
           Add Item

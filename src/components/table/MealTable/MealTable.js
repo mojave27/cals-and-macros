@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
-import SelectedFoodsRow from '../SelectedFoods/SelectedFoodsRow'
+import FoodRow from './FoodRow'
 import { calsPerGram } from '../../constants/nutrients'
 
 const MealTable = props => {
@@ -21,7 +21,7 @@ const MealTable = props => {
         </Table.Row>
       </Table.Header>
 
-      <Table.Body>{renderSelectedFoodItems(props)}</Table.Body>
+      <Table.Body>{renderFoodRows(props)}</Table.Body>
 
       {props.foodList.length > 0 ? (
         <Table.Footer>
@@ -33,10 +33,10 @@ const MealTable = props => {
   )
 }
 
-const renderSelectedFoodItems = props => {
+const renderFoodRows = props => {
   return (props.foodList.map((foodItem, index) => {
     return (
-      <SelectedFoodsRow
+      <FoodRow
         key={index}
         rowId={index}
         rowData={foodItem}
@@ -44,6 +44,8 @@ const renderSelectedFoodItems = props => {
         rowDelete={props.rowDelete}
         onSelect={props.rowSelect}
         onQuantityChange={props.onQuantityChange}
+        tweakUp={props.tweakUp}
+        tweakDown={props.tweakDown}
       />
     )
   }))

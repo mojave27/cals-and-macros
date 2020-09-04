@@ -6,10 +6,10 @@ const saveMeal = mealData => {
 
   return axiosFood
     .post(url, mealData, options)
-    .then(function(response) {
-      return 'success'
+    .then(response => {
+      return response
     })
-    .catch(function(error) {
+    .catch(error => {
       // handle error
       console.log(`[ui - retrieveFoodList] api error: ${error}`);
       return [];
