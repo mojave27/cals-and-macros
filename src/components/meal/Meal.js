@@ -117,7 +117,7 @@ class Meal extends Component {
     })
   }
 
-  saveMeal = () => {
+  saveTheMeal = () => {
     saveMeal(this.state.meal)
       .then(response => {
         console.log(response)
@@ -234,7 +234,7 @@ class Meal extends Component {
         <Button color='orange' onClick={this.toggleSearch}>
           Add Item
         </Button>
-        <Button color='green' onClick={this.saveMeal}>
+        <Button color='green' onClick={this.saveTheMeal}>
           Save Meal
         </Button>
 
