@@ -199,7 +199,6 @@ class Meal extends Component {
   deleteRow = (event) => {
     let id = event.target.id
     let index = findIndexOfId(id, this.state.meal.foodList)
-    console.log(this.state.meal.foodList[index])
     this.setState( prevState => {
       let meal = prevState.meal
       meal.foodList.splice(index,1)
