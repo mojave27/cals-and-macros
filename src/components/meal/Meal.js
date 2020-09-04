@@ -4,6 +4,7 @@ import MealTable from '../table/MealTable/MealTable'
 import ReusableFoodSearch from '../food/FoodSearch/ReusableFoodSearch'
 import saveMeal from '../../apis/saveMeal'
 import styles from './Meal.module.css'
+import { findIndexOfId } from '../util/ArrayUtils'
 import { cloneDeep } from 'lodash'
 
 const buttonStyle = {
@@ -33,8 +34,7 @@ class Meal extends Component {
     tweakValue: 0,
     message: '',
     searchValue: '',
-    showConfirm: false,
-    showModal: false,
+    selectedFoodItems: [],
     showSearch: false
   }
 
@@ -52,7 +52,14 @@ class Meal extends Component {
     })
   }
 
-  handleRowSelect = (rowId, event) => {}
+  handleRowSelect = (rowId, event) => {
+    event.preventDefault()
+    this.setState(prevState => {
+      let selectedFoodItems = prevState.selectedFoodItems
+      selectedFoodItems.push(prevState.foodList[rowId])
+      return { selectedFoodItems }
+    })
+  }
 
   setActiveFood = (foodItem, foodDetails) => {
     const parsedFoodDetails = this.parseFood(foodDetails)
@@ -101,11 +108,11 @@ class Meal extends Component {
   }
   /* ******************************************************** */
 
-  addToMeal = () => {
+  addToMeal = (foodItem) => {
     this.toggleSearch()
     this.setState(prevState => {
       let meal = prevState.meal
-      meal.foodList.push(prevState.activeFoodDetails)
+      meal.foodList.push(foodItem)
       return { meal }
     })
   }
@@ -191,36 +198,19 @@ class Meal extends Component {
 
   deleteRow = (event) => {
     let id = event.target.id
+    let index = findIndexOfId(id, this.state.meal.foodList)
+    console.log(this.state.meal.foodList[index])
     this.setState( prevState => {
       let meal = prevState.meal
-      meal.foodList.splice(id,1)
+      meal.foodList.splice(index,1)
       return { meal } 
     })
   }
 
-  // handleDropdownChange = (event,data) => {
-  //   console.log(event)
-  //   console.log(data)
-  // }
-
-  // ddOptions = [
-  //   { key: 0, text: 'grams', value: 0, onClick: this.handleDropdownChange },
-  //   { key: 1, text: 'ounces', value: 1, onClick: this.handleDropdownChange },
-  //   { key: 2, text: 'whole', value: 2, onClick: this.handleDropdownChange }
-  // ];
-
   render() {
     return (
       <div className={styles.container}>
-        {/* <Dropdown
-          placeholder='placeholder'
-          fluid
-          selection
-          options={this.ddOptions}
-          onChange={this.handleDropdownChange}
-          onClick={this.handleDropdownChange}
-          scrolling
-        />   */}
+
         <Input
           label={'meal name'}
           value={this.state.meal.name}
@@ -253,7 +243,7 @@ class Meal extends Component {
 
         {this.state.showSearch ? (
           <ReusableFoodSearch
-            addToMeal={this.addToMeal}
+            rowSelect={this.addToMeal}
             setActiveFood={this.setActiveFood}
             activeFood={this.state.activeFood}
             activeFoodDetails={this.state.activeFoodDetails}

@@ -4,21 +4,16 @@ import { Input, Table } from 'semantic-ui-react'
 const SelectedFoodsRow = props => {
   let [ units, setUnits ] = useState('grams')
 
-  const rowClick = e => {
-    const { rowSelect, rowId } = props
-    rowSelect(rowId, e)
-  }
-
   const rowDelete = e => {
     e.stopPropagation()
     props.rowDelete(e)
   }
 
-  const handleDropdownChange = event => {
-    console.log(event.target.value)
-    let newUnits = event.target.value
-    setUnits(newUnits)
-  }
+  // const handleDropdownChange = event => {
+  //   console.log(event.target.value)
+  //   let newUnits = event.target.value
+  //   setUnits(newUnits)
+  // }
 
   const calcDefaultValue = qty => {
     if(typeof qty === undefined){
@@ -72,6 +67,7 @@ const SelectedFoodsRow = props => {
       <Table.Cell>{props.rowData.proteinGrams}</Table.Cell>
       <Table.Cell>{props.rowData.carbGrams}</Table.Cell>
       {/* <Table.Cell>{props.rowData.fiberGrams}</Table.Cell> */}
+      <Table.Cell>{0}</Table.Cell>
       {/* <Table.Cell>{props.rowData.nutrients.netCarbs}</Table.Cell> */}
       <Table.Cell>{0}</Table.Cell>
       <Table.Cell>{props.rowData.fatGrams}</Table.Cell>

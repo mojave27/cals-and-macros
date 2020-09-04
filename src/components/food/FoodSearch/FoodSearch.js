@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Confirm, Divider, Input } from 'semantic-ui-react'
 import retrieveFoodList from '../../../apis/retrieveFoodList'
-import retrieveFoodItem from '../../../apis/retrieveFoodItem'
 import SelectedFoods from '../../table/SelectedFoods/SelectedFoods'
 import FoodListTable from '../../table/FoodListTable/FoodListTable'
-import FoodDetails from '../../food/FoodItem/FoodDetails'
-import FoodDetailsModal from '../../modals/FoodDetailsModal'
 import styles from './FoodSearch.module.css'
-import { axiosFood } from '../../../config/apiConfig'
 import AppContext from '../../context/appContext'
 import { findIndexOfId, removeItemFromArrayByIndex } from '../../util/ArrayUtils'
 
@@ -40,7 +36,6 @@ class FoodSearch extends Component {
   }
 
   handleRowDelete = event => {
-    // console.log(event.target.id)
     const id = event.target.id
     console.log(`id: ${id}`)
     const index = findIndexOfId(id, this.state.selectedFoodItems)
@@ -60,22 +55,6 @@ class FoodSearch extends Component {
       selectedFoodItems.push(prevState.foodList[rowId])
       return { selectedFoodItems }
     })
-    // set all rows in list to inactive (unselected)
-    // let updatedResults = this.state.foodList.map(foodItem => {
-    //   let updatedFoodItem = { ...foodItem }
-    //   updatedFoodItem.active = false
-    //   return updatedFoodItem
-    // })
-    // set the selected row as active
-    // updatedResults[rowId].active = true
-    // // retrieveFoodItem(updatedResults[rowId].fdcId).then(foodItem => {
-    //   this.setState({
-    //     foodList: updatedResults,
-    //     activeFood: updatedResults[rowId],
-    //     activeFoodDetails: updatedResults[rowId],
-    //     showModal: true
-    //   })
-    // })
   }
 
   selectFoodItem = event => {
@@ -125,9 +104,7 @@ class FoodSearch extends Component {
         let foodList = []
         let error = true
         let message = 'No items found for search term.'
-        // let initialFoodList = apiSearchResults.foods
         let initialFoodList = apiSearchResults
-        console.log(initialFoodList)
 
         if (initialFoodList && initialFoodList.length > 0) {
           error = false
@@ -162,19 +139,6 @@ class FoodSearch extends Component {
     })
   }
 
-  addFoodtoApp = () => {
-    const url = 'appdb'
-    const foodToAdd = this.state.activeFoodDetails
-    return axiosFood
-      .post(url, foodToAdd)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
   handleKeyPress = e => {
     if (e.key === 'Enter') {
       this.handleSearchClick()
@@ -197,14 +161,7 @@ class FoodSearch extends Component {
               Add to Meal
             </Button>
             <Divider />
-            <FoodDetailsModal
-              show={this.state.showModal}
-              onClose={this.toggleModal}
-              onSelect={this.selectFoodItem}
-              onAddToApp={this.addFoodtoApp}
-            >
-              <FoodDetails foodDetails={this.state.activeFoodDetails} />
-            </FoodDetailsModal>
+
             <Input
               loading={this.state.loading}
               icon='search'
@@ -215,7 +172,7 @@ class FoodSearch extends Component {
               className={styles.searchInput}
               onKeyPress={this.handleKeyPress}
             />
-            {/* <input ref='reference' onKeyPress={(e) => {(e.key === 'Enter' ? doSomething(this.refs.reference.value) : null)}} /> */}
+
             <br />
             <Button color='orange' onClick={this.handleSearchClick} disabled={false}>
               search

@@ -90,6 +90,7 @@ const SelectedFoods = props => {
           <Table.HeaderCell>Protein Grams</Table.HeaderCell>
           <Table.HeaderCell>Carb Grams</Table.HeaderCell>
           <Table.HeaderCell>Fiber Grams</Table.HeaderCell>
+          <Table.HeaderCell>Net Carb Grams</Table.HeaderCell>
           <Table.HeaderCell>Fat Grams</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -111,7 +112,8 @@ const SelectedFoods = props => {
           <Table.Cell style={{color:'orange'}}>{sumCals(props.foodList)}</Table.Cell>
           <Table.Cell style={{color:'orange'}}>{sumProtein(props.foodList)}</Table.Cell>
           <Table.Cell style={{color:'orange'}}>{sumCarbs(props.foodList)}</Table.Cell>
-          <Table.Cell></Table.Cell>
+          <Table.Cell>'to-do'</Table.Cell>
+          <Table.Cell>'to-do'</Table.Cell>
           <Table.Cell style={{color:'orange'}}>{sumFat(props.foodList)}</Table.Cell>
         </Table.Row>
         {/* macros row */}
@@ -120,7 +122,8 @@ const SelectedFoods = props => {
           <Table.Cell />
           <Table.Cell style={{color:'orange'}}>{macroCalcProtein(props.foodList)}</Table.Cell>
           <Table.Cell style={{color:'orange'}}>{macroCalcCarbs(props.foodList)}</Table.Cell>
-          <Table.Cell></Table.Cell>
+          <Table.Cell>'to-do'</Table.Cell>
+          <Table.Cell>'to-do'</Table.Cell>
           <Table.Cell style={{color:'orange'}}>{macroCalcFat(props.foodList)}</Table.Cell>
         </Table.Row>
       </Table.Body>

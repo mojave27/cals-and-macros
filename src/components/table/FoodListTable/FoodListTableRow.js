@@ -3,8 +3,8 @@ import { Icon, Table } from 'semantic-ui-react'
 
 const FoodListTableRow = props => {
   const rowClick = e => {
-    const { onClick, rowId } = props
-    onClick(rowId, e)
+    const { onRowClick, rowId } = props
+    onRowClick(rowId, e)
   };
 
   // const renderSelected = selected => {

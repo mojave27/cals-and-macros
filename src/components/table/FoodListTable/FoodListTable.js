@@ -31,8 +31,7 @@ const FoodListTable = props => {
               key={index}
               rowId={index}
               rowData={foodItem}
-              onClick={props.rowClick}
-              onSelect={props.rowSelect}
+              onRowClick={props.rowClick}
               selected={selected}
             />
           )
