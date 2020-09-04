@@ -91,7 +91,6 @@ class FoodSearch extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <button onClick={this.props.onClose}>close</button>
         <Input
           loading={this.state.loading}
           icon='search'
@@ -106,14 +105,17 @@ class FoodSearch extends Component {
         <Button color='orange' onClick={this.handleClick} disabled={false}>
           search
         </Button>
+        <Button color='red' onClick={this.props.onClose}>close</Button>
         <br />
         {this.state.foodList.length > 0 ? (
+          <React.Fragment>
           <FoodListTable
             foodList={this.state.foodList}
             selectedFoodItems={this.state.selectedFoodItems}
             rowClick={this.handleRowSelect}
             rowSelect={this.selectFoodItem}
           />
+          </React.Fragment>
         ) : null}
         <Confirm
           open={this.state.showConfirm}

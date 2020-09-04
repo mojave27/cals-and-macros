@@ -21,21 +21,8 @@ const MealTable = props => {
         </Table.Row>
       </Table.Header>
 
-      <Table.Body>
-        {props.foodList.map((foodItem, index) => {
-          return (
-            <SelectedFoodsRow
-              key={index}
-              rowId={index}
-              rowData={foodItem}
-              onClick={props.rowClick}
-              rowDelete={props.rowDelete}
-              onSelect={props.rowSelect}
-              onQuantityChange={props.onQuantityChange}
-            />
-          )
-        })}
-      </Table.Body>
+      <Table.Body>{renderSelectedFoodItems(props)}</Table.Body>
+
       {props.foodList.length > 0 ? (
         <Table.Footer>
           <SummaryRow foodList={props.foodList} />
@@ -46,48 +33,52 @@ const MealTable = props => {
   )
 }
 
+const renderSelectedFoodItems = props => {
+  return (props.foodList.map((foodItem, index) => {
+    return (
+      <SelectedFoodsRow
+        key={index}
+        rowId={index}
+        rowData={foodItem}
+        onClick={props.rowClick}
+        rowDelete={props.rowDelete}
+        onSelect={props.rowSelect}
+        onQuantityChange={props.onQuantityChange}
+      />
+    )
+  }))
+}
+
 const SummaryRow = props => {
-  const sumIt = nutrientName => {
-    let allVals = props.foodList.map(foodItem => {
+  return (
+    <Table.Row>
+      <Table.HeaderCell colSpan={4}>{'Totals'}</Table.HeaderCell>
+      <Table.HeaderCell>{sumIt('calories', props.foodList)}</Table.HeaderCell>
+      <Table.HeaderCell>{sumIt('proteinGrams', props.foodList)}</Table.HeaderCell>
+      <Table.HeaderCell>{sumIt('carbGrams', props.foodList)}</Table.HeaderCell>
+      {/* <Table.HeaderCell>{sumIt('fiberGrams')}</Table.HeaderCell> */}
+      <Table.HeaderCell>{'0'}</Table.HeaderCell>
+      {/* <Table.HeaderCell>{sumIt('netCarbs')}</Table.HeaderCell> */}
+      <Table.HeaderCell>{'0'}</Table.HeaderCell>
+      <Table.HeaderCell>{sumIt('fatGrams', props.foodList)}</Table.HeaderCell>
+    </Table.Row>
+  )
+}
+
+const sumIt = (nutrientName, foodList) => {
+    let allVals = foodList.map(foodItem => {
       return foodItem[nutrientName]
     })
     var sum = allVals.reduce(function(accumulator, currentValue) {
       return Number(accumulator) + Number(currentValue)
     }, 0)
-    return sum
-  }
-
-  return (
-    <Table.Row>
-      <Table.HeaderCell colSpan={4}>{'Totals'}</Table.HeaderCell>
-      <Table.HeaderCell>{sumIt('calories')}</Table.HeaderCell>
-      <Table.HeaderCell>{sumIt('proteinGrams')}</Table.HeaderCell>
-      <Table.HeaderCell>{sumIt('carbGrams')}</Table.HeaderCell>
-      {/* <Table.HeaderCell>{sumIt('fiberGrams')}</Table.HeaderCell> */}
-      <Table.HeaderCell>{'0'}</Table.HeaderCell>
-      {/* <Table.HeaderCell>{sumIt('netCarbs')}</Table.HeaderCell> */}
-      <Table.HeaderCell>{'0'}</Table.HeaderCell>
-      <Table.HeaderCell>{sumIt('fatGrams')}</Table.HeaderCell>
-    </Table.Row>
-  )
+    return Number.parseFloat(sum).toFixed(1)
 }
 
 const MacrosRow = props => {
 
-  /* this is same fx as 'sumIt' */
-  const sumCals = () => {
-    let allCals = props.foodList.map(foodItem => {
-      return foodItem.calories
-    })
-    var sum = allCals.reduce(function(accumulator, currentValue) {
-      let tempSum = Number(accumulator) + Number(currentValue)
-      return Number(tempSum)
-    }, 0)
-    return Number.parseFloat(sum).toFixed(1)
-  }
-
   const percentIt = nutrientName => {
-    const totalCals = sumCals()
+    const totalCals = sumIt('calories', props.foodList)
     let allVals = props.foodList.map(foodItem => {
       return foodItem[nutrientName]
     })
@@ -97,7 +88,7 @@ const MacrosRow = props => {
     }, 0)
     const percentage =
       (sum.toFixed(2) * calsPerGram.get(nutrientName)) / totalCals
-    return isNaN(percentage) ? 0 : percentage.toFixed(2) * 100
+    return isNaN(percentage) ? 0 : Number.parseFloat(percentage * 100).toFixed(2)
   }
 
   return (
