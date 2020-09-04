@@ -109,7 +109,7 @@ class Meal extends Component {
   /* ******************************************************** */
 
   addToMeal = (foodItem) => {
-    this.toggleSearch()
+    // this.toggleSearch()
     this.setState(prevState => {
       let meal = prevState.meal
       meal.foodList.push(foodItem)
@@ -242,6 +242,7 @@ class Meal extends Component {
 
         {this.state.showSearch ? (
           <ReusableFoodSearch
+            onClose={this.toggleSearch}
             rowSelect={this.addToMeal}
             setActiveFood={this.setActiveFood}
             activeFood={this.state.activeFood}

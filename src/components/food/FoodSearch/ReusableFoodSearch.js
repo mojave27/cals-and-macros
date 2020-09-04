@@ -91,7 +91,7 @@ class FoodSearch extends Component {
   render() {
     return (
       <div className={styles.container}>
-
+        <button onClick={this.props.onClose}>close</button>
         <Input
           loading={this.state.loading}
           icon='search'
