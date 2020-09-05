@@ -34,7 +34,8 @@ class App extends Component {
             <Meal path='meal' />
             <MealCalc path='meal-calc' />
             <HoverTest path='hovertest' />
-            <DbManage path='manage-db' />
+            <DbManage path='manage-foods-db' />
+            <DbManage path='manage-meals-db' />
           </Router>
       </div>
     );

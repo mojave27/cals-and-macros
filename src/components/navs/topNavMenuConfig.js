@@ -9,7 +9,8 @@ export const menuConfig =
          },
         { name: 'manage',
             items: [
-                { to: 'manage-db', text: 'manage db' }
+                { to: 'manage-foods-db', text: 'foods db' },
+                { to: 'manage-meals-db', text: 'meals db' }
             ]
          }
     ];
