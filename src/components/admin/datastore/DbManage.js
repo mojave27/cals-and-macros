@@ -5,6 +5,8 @@ import styles from './DbManage.module.css'
 import EditableTable from '../../table/EditableTable/EditableTable'
 import StandardModal from '../../modals/StandardModal'
 import Form from '../../forms/DbEntryForm'
+import { removeItemById } from 'list-utils'
+import deleteFoodItem from '../../../apis/deleteFoodItem'
 
 const foodItemHeaders = [
   { value: 'description', cellAttributes: [] },
@@ -31,7 +33,6 @@ const DbManage = () => {
       let { id, ...data } = item
       return { id, data }
     })
-    console.log(transformed)
     setFoodList(transformed)
   }
 
@@ -46,9 +47,16 @@ const DbManage = () => {
     setSelected(currSelected)
   }
 
-  const handleDeleteSelected = () => {
+  const handleDeleteSelected = async () => {
+    let list = []
     let message = `Deleting these items: ${selected}`
     alert(message)
+    await selected.forEach( async item => {
+      list = removeItemById(item, foodList)
+      await deleteFoodItem(item)
+    })
+    setFoodList(list)
+    setSelected([])
   }
 
   const toggleModal = () => {

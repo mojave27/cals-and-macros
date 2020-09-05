@@ -5,7 +5,7 @@ import SelectedFoods from '../../table/SelectedFoods/SelectedFoods'
 import FoodListTable from '../../table/FoodListTable/FoodListTable'
 import styles from './FoodSearch.module.css'
 import AppContext from '../../context/appContext'
-import { findIndexOfId, removeItemFromArrayByIndex } from '../../util/ArrayUtils'
+import { findIndexOfId, removeItemFromArrayByIndex } from 'list-utils'
 
 class FoodSearch extends Component {
   state = {

@@ -4,7 +4,7 @@ import MealTable from '../table/MealTable/MealTable'
 import ReusableFoodSearch from '../food/FoodSearch/ReusableFoodSearch'
 import saveMeal from '../../apis/saveMeal'
 import styles from './Meal.module.css'
-import { findIndexOfId } from '../util/ArrayUtils'
+import { findIndexOfId } from 'list-utils'
 import { cloneDeep } from 'lodash'
 
 const buttonStyle = {

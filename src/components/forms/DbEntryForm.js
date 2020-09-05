@@ -33,9 +33,9 @@ const DbEntryForm = props => {
     >
       <Form className={styles.form}>
       {/* <Form > */}
-        {fields.map( field => {
+        {fields.map( (field,index) => {
           return (
-            <React.Fragment>
+            <React.Fragment key={`${field}-${index}`}>
               <label htmlFor={field.value}>{field.value}</label>
               <Field id={field.value} name={field.value} placeholder={field.placeholder} />
             </React.Fragment>

@@ -22,15 +22,4 @@ const postFoodItem = foodItem => {
 }
 
 
-const parseResponse = (response) => {
-    const responseData = response.data.response
-    let data = { 
-      totalHits: responseData.totalHits,
-      currentPage: responseData.currentPage,
-      totalPages: responseData.totalPages,
-      foods: responseData.foods
-    }
-    return data;
-}
-
 export { postFoodItem }

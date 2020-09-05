@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Button, Confirm, Input } from 'semantic-ui-react';
-import retrieveFoodList from '../../../apis/retrieveFoodList';
-import FoodListTable from '../../table/FoodListTable/FoodListTable';
+import React, { Component } from 'react'
+import { Button, Confirm, Input } from 'semantic-ui-react'
+import retrieveFoodList from '../../../apis/retrieveFoodList'
+import FoodListTable from '../../table/FoodListTable/FoodListTable'
 import styles from './FoodSearch.module.css';
-import { findIndexOfId, removeItemFromArrayByIndex } from '../../util/ArrayUtils'
+import { findIndexOfId, removeItemFromArrayByIndex } from 'list-utils'
 
 class FoodSearch extends Component {
   state = {
