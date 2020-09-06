@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 // import { Button, Divider, Input } from 'semantic-ui-react'
-import MealTableReadOnly from '../table/MealTableReadOnly/MealTableReadOnly'
+import MealTable from '../table/MealTable/MealTable'
 import retrieveMeals from '../../apis/retrieveMeals'
 import styles from './Meal.module.css'
 
@@ -23,7 +23,7 @@ const MealViewer = props => {
         return (
           <div key={`${meal}-${index}`}>
             <label>{meal.name}</label>
-            <MealTableReadOnly foodList={meal.foodList} />
+            <MealTable viewOnly={true} foodList={meal.foodList} />
           </div>
         )
       })}
