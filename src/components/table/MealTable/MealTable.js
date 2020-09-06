@@ -40,13 +40,13 @@ const renderFoodRows = props => {
         key={index}
         rowId={index}
         rowData={foodItem}
-        onclick={props.rowclick}
-        rowdelete={props.rowdelete}
-        onselect={props.rowselect}
-        onquantitychange={props.onquantitychange}
-        tweakup={props.tweakup}
-        tweakdown={props.tweakdown}
-        // viewOnly={props.viewOnly}
+        onClick={props.rowClick}
+        rowDelete={props.rowDelete}
+        onSelect={props.rowSelect}
+        onQuantityChange={props.onQuantityChange}
+        tweakUp={props.tweakUp}
+        tweakDown={props.tweakDown}
+        viewOnly={props.viewOnly}
       />
     )
   }))

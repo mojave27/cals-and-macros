@@ -18,7 +18,7 @@ const buttonStyle = {
 }
 
 const FoodRow = props => {
-  let [ units, setUnits ] = useState('grams')
+  let [units, setUnits] = useState('grams')
 
   const rowDelete = e => {
     e.stopPropagation()
@@ -32,44 +32,78 @@ const FoodRow = props => {
   // }
 
   const calcDefaultValue = qty => {
-    if(typeof qty === undefined){
+    if (typeof qty === undefined) {
       return 100
     }
     let updatedQty = qty
     if (units === 'ounces') {
-      updatedQty = (qty/28.35) * 100
-      updatedQty = (Math.ceil(updatedQty)) / 100
+      updatedQty = (qty / 28.35) * 100
+      updatedQty = Math.ceil(updatedQty) / 100
     }
     return updatedQty
   }
 
   const handleQtyChange = event => {
     let value = event.target.value
-    console.log(`value before: ${value}`) 
-    if(units === 'ounces') {
+    console.log(`value before: ${value}`)
+    if (units === 'ounces') {
       value = value * 28.35
     }
-    console.log(`value after: ${value}`) 
+    console.log(`value after: ${value}`)
     props.onQuantityChange(event, value)
   }
-  
-  const tweakUp = (event) => {
+
+  const tweakUp = event => {
     console.log(event.target.dataset.rowid)
     const rowid = event.target.dataset.rowid
     props.tweakUp(rowid)
   }
-  
-  const tweakDown = (event) => {
+
+  const tweakDown = event => {
     console.log(event.target.dataset.rowid)
     const rowid = event.target.dataset.rowid
     props.tweakDown(rowid)
   }
 
+  const renderTweakButtons = viewOnly => {
+    if (viewOnly) {
+      return null
+    } else {
+      return (
+        <div>
+          <button
+            data-rowid={props.rowData.id}
+            style={buttonStyle}
+            onClick={tweakDown}
+          >
+            -
+          </button>
+          {'tweak'}
+          <button
+            data-rowid={props.rowData.id}
+            style={buttonStyle}
+            onClick={tweakUp}
+          >
+            +
+          </button>
+        </div>
+      )
+    }
+  }
+
+  const renderLeadCell = viewOnly => {
+      return viewOnly ? (
+        <Table.Cell />
+      ) : (
+        <Table.Cell id={props.rowData.id} onClick={rowDelete}>
+          {'X'}
+        </Table.Cell>
+      )
+  }
+
   return (
     <Table.Row active={props.rowData.active}>
-      <Table.Cell id={props.rowData.id} onClick={rowDelete}>
-        {'X'}
-      </Table.Cell>
+      {renderLeadCell(props.viewOnly)}
       <Table.Cell>{props.rowData.description}</Table.Cell>
       <Table.Cell>
         <Input
@@ -77,31 +111,13 @@ const FoodRow = props => {
           onChange={handleQtyChange}
           id={props.rowData.id}
         />
-        <div>
-          <button data-rowid={props.rowData.id} style={buttonStyle} onClick={tweakDown}>
-            -
-          </button>
-          {'tweak'}
-          <button data-rowid={props.rowData.id} style={buttonStyle} onClick={tweakUp}>
-            +
-          </button>
-        </div>
+        {renderTweakButtons(props.viewOnly)}
       </Table.Cell>
-      {/* <Table.Cell>{'grams'}</Table.Cell> */}
-      <Table.Cell>
-        {props.rowData.unit}
-        {/* <select id='units' onChange={handleDropdownChange}> */}
-          {/* <option value='grams'>grams</option> */}
-          {/* <option value='ounces'>ounces</option> */}
-          {/* <option value='whole'>whole</option> */}
-        {/* </select> */}
-      </Table.Cell>
+      <Table.Cell>{props.rowData.unit}</Table.Cell>
       <Table.Cell>{props.rowData.calories}</Table.Cell>
       <Table.Cell>{props.rowData.proteinGrams}</Table.Cell>
       <Table.Cell>{props.rowData.carbGrams}</Table.Cell>
-      {/* <Table.Cell>{props.rowData.fiberGrams}</Table.Cell> */}
       <Table.Cell>{0}</Table.Cell>
-      {/* <Table.Cell>{props.rowData.nutrients.netCarbs}</Table.Cell> */}
       <Table.Cell>{0}</Table.Cell>
       <Table.Cell>{props.rowData.fatGrams}</Table.Cell>
     </Table.Row>
