@@ -38,19 +38,19 @@ class Meal extends Component {
     showSearch: false
   }
 
-  tweakUp = () => {
-    this.setState(prevState => {
-      let newTweakValue = prevState.tweakValue + 1
-      return { tweakValue: newTweakValue }
-    })
-  }
+  // tweakUp = () => {
+  //   this.setState(prevState => {
+  //     let newTweakValue = prevState.tweakValue + 1
+  //     return { tweakValue: newTweakValue }
+  //   })
+  // }
 
-  tweakDown = () => {
-    this.setState(prevState => {
-      let newTweakValue = prevState.tweakValue - 1
-      return { tweakValue: newTweakValue }
-    })
-  }
+  // tweakDown = () => {
+  //   this.setState(prevState => {
+  //     let newTweakValue = prevState.tweakValue - 1
+  //     return { tweakValue: newTweakValue }
+  //   })
+  // }
 
   tweakRowUp = id => {
     this.setState(prevState => {
@@ -196,7 +196,7 @@ class Meal extends Component {
           value={this.state.meal.name}
           onChange={this.handleInputChange}
         />
-        <div>
+        {/* <div>
           <button style={buttonStyle} onClick={this.tweakDown}>
             -
           </button>
@@ -204,7 +204,7 @@ class Meal extends Component {
           <button style={buttonStyle} onClick={this.tweakUp}>
             +
           </button>
-        </div>
+        </div> */}
         <MealTable
           foodList={this.state.meal.foodList}
           rowClick={this.handleRowSelect}

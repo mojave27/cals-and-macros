@@ -3,7 +3,7 @@ import { Table } from 'semantic-ui-react'
 import FoodRow from './FoodRow'
 import { calsPerGram } from '../../constants/nutrients'
 
-const MealTable = props => {
+const MealTableReadOnly = props => {
   return (
     <Table compact celled selectable>
       <Table.Header>
@@ -40,13 +40,7 @@ const renderFoodRows = props => {
         key={index}
         rowId={index}
         rowData={foodItem}
-        onclick={props.rowclick}
-        rowdelete={props.rowdelete}
-        onselect={props.rowselect}
-        onquantitychange={props.onquantitychange}
-        tweakup={props.tweakup}
-        tweakdown={props.tweakdown}
-        // viewOnly={props.viewOnly}
+        viewOnly={true}
       />
     )
   }))
@@ -112,4 +106,4 @@ const MacrosRow = props => {
   )
 }
 
-export default MealTable
+export default MealTableReadOnly

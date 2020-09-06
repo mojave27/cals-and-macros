@@ -7,6 +7,12 @@ export const menuConfig =
                 { to: 'meal', text: 'meal' },
             ]
          },
+        { name: 'view',
+            items: [
+                // { to: 'food-search', text: 'foods' },
+                { to: 'meals', text: 'meals' }
+            ]
+         },
         { name: 'manage',
             items: [
                 { to: 'manage-foods-db', text: 'foods db' },
