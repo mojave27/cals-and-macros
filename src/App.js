@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styles from './App.module.css'
 import TopNav from './components/navs/TopNav'
 import Home from './components/Home/Home'
@@ -10,22 +10,14 @@ import { Router } from '@reach/router'
 import DbManage from './components/admin/datastore/DbManage'
 
 
-class App extends Component {
-  state = { meal: {} }
+const App = () => {
 
-  updateMeal = update => {
-    let meal = this.state.meal
-    this.setState({meal: meal})
-  }
-
-  render() {
     return (
       <div className={styles.App}>
         <div>
           <TopNav />
         </div>
           <Router>
-            {/*  Any child or child of a child component in here can access 'AppContext'*/}
             <Home path='/' />
             <Form path='form' />
             <Meal path='meal' />
@@ -35,8 +27,7 @@ class App extends Component {
             <DbManage path='manage-meals-db' />
           </Router>
       </div>
-    );
-  }
+    )
 }
 
 export default App;
