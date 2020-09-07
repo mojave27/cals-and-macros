@@ -62,6 +62,7 @@ class TopNav extends Component {
       <div>
         <div className="navbar">
           <Link to="/">home</Link>
+          <a href="https://fdc.nal.usda.gov/" target={'_blank'}>usda-db</a>
           { menuConfig.map( (menu, index) => {
             return this.renderDropDownMenu(menu, index)
             })

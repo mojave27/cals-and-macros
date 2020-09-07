@@ -54,13 +54,11 @@ const FoodRow = props => {
   }
 
   const tweakUp = event => {
-    console.log(event.target.dataset.rowid)
     const rowid = event.target.dataset.rowid
     props.tweakUp(rowid)
   }
 
   const tweakDown = event => {
-    console.log(event.target.dataset.rowid)
     const rowid = event.target.dataset.rowid
     props.tweakDown(rowid)
   }
@@ -110,6 +108,7 @@ const FoodRow = props => {
           value={calcDefaultValue(props.rowData.quantity)}
           onChange={handleQtyChange}
           id={props.rowData.id}
+          disabled={props.viewOnly}
         />
         {renderTweakButtons(props.viewOnly)}
       </Table.Cell>

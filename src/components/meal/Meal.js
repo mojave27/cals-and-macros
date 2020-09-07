@@ -7,21 +7,21 @@ import styles from './Meal.module.css'
 import { findIndexOfId } from 'list-utils'
 import { cloneDeep } from 'lodash'
 
-const buttonStyle = {
-  backgroundColor: '#4CAF50',
-  border: 'none',
-  color: 'white',
-  padding: '2px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  fontSize: '16px',
-  width: '1.2em',
-  fontWeight: '700',
-  lineHeight: '1em',
-  margin: '4px 4px',
-  borderRadius: '50%'
-}
+// const buttonStyle = {
+//   backgroundColor: '#4CAF50',
+//   border: 'none',
+//   color: 'white',
+//   padding: '2px',
+//   textAlign: 'center',
+//   textDecoration: 'none',
+//   display: 'inline-block',
+//   fontSize: '16px',
+//   width: '1.2em',
+//   fontWeight: '700',
+//   lineHeight: '1em',
+//   margin: '4px 4px',
+//   borderRadius: '50%'
+// }
 
 class Meal extends Component {
   state = {
@@ -191,16 +191,16 @@ class Meal extends Component {
           tweakUp={this.tweakRowUp}
           tweakDown={this.tweakRowDown}
         />
-        <Button color='orange' onClick={this.toggleSearch}>
+        {/* <Button color='orange' onClick={this.toggleSearch}>
           Add Item
-        </Button>
+        </Button> */}
         <Button color='green' onClick={this.saveTheMeal}>
           Save Meal
         </Button>
 
         <Divider />
 
-        {this.state.showSearch ? (
+        {/* {this.state.showSearch ? ( */}
           <ReusableFoodSearch
             onClose={this.toggleSearch}
             rowSelect={this.addToMeal}
@@ -208,7 +208,7 @@ class Meal extends Component {
             activeFood={this.state.activeFood}
             activeFoodDetails={this.state.activeFoodDetails}
           />
-        ) : null}
+        {/* ) : null} */}
       </div>
     )
   }

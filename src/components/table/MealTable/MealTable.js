@@ -5,7 +5,7 @@ import { calsPerGram } from '../../constants/nutrients'
 
 const MealTable = props => {
   return (
-    <Table compact celled selectable>
+    <Table compact celled selectable={!props.viewOnly}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell />
