@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Divider } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
 import MealTable from '../table/MealTable/MealTable'
 import retrieveMeals from '../../apis/retrieveMeals'
 import styles from './Meal.module.css'
@@ -21,11 +21,12 @@ const MealViewer = props => {
     <div className={styles.container}>
       {meals.map((meal, index) => {
         return (
+          <Segment color='orange'>
           <div key={`${meal}-${index}`}>
             <div style={{paddingLeft:'10px',color:'orange'}}><h3>{meal.name}</h3></div>
             <MealTable viewOnly={true} foodList={meal.foodList} />
-            <Divider section />
           </div>
+          </Segment>
         )
       })}
     </div>

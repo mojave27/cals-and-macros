@@ -39,6 +39,11 @@ const FoodListTable = props => {
       </Table.Body>
     </Table>
   );
-};
+}
+
+FoodListTable.defaultProps = {
+  foodList: [],
+  selectedFoodItems: []
+}
 
 export default FoodListTable;
