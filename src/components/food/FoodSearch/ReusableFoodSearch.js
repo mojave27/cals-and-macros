@@ -1,66 +1,48 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Confirm, Input } from 'semantic-ui-react'
 import retrieveFoodList from '../../../apis/retrieveFoodList'
 import FoodListTable from '../../table/FoodListTable/FoodListTable'
-import styles from './FoodSearch.module.css';
-import { findIndexOfId, sortByStringProperty, removeItemFromArrayByIndex } from 'list-utils'
+import styles from './FoodSearch.module.css'
+import { sortByStringProperty } from 'list-utils'
 
-class FoodSearch extends Component {
-  state = {
-    activeFood: {},
-    foodList: [],
-    loading: false,
-    message: '',
-    searchValue: '',
-    selectedFoodItems: [],
-    showConfirm: false,
-    showModal: false
-  };
+const FoodSearch = props => {
+  const [foodList, setFoodList] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
+  const [searchValue, setSearchValue] = useState('')
+  const [showConfirm, setShowConfirm] = useState(false)
 
-  componentDidMount = () => {
-    this.retrieve()
+  useEffect(() => {
+    retrieve()
+  }, [])
+
+  const handleModalCancel = () => {
+    setShowConfirm(false)
+  }
+  const handleModalConfirm = () => {
+    handleModalCancel()
   }
 
-  handleModalCancel = () => {
-    this.setState({ showConfirm: false });
-  };
-  handleModalConfirm = () => {
-    this.setState({ showConfirm: false });
-  };
-
-  handleInputChange = e => {
-    this.setState({ searchValue: e.target.value });
-  };
-
-  handleClick = () => {
-    this.setState({ loading: true });
-    this.retrieve();
+  const handleInputChange = e => {
+    setSearchValue(e.target.value)
   }
 
-  handleRowDelete = event => {
-    const id = event.target.id
-    console.log(`id: ${id}`)
-    const index = findIndexOfId(id, this.state.selectedFoodItems)
-    console.log(`deleting ${JSON.stringify(this.state.selectedFoodItems[index])}`)
-    this.setState(prevState => {
-      console.log(prevState.selectedFoodItems)
-      let newSelectedItems = removeItemFromArrayByIndex(index, prevState.selectedFoodItems)
-      console.log(newSelectedItems)
-      return({selectedFoodItems: newSelectedItems})
-    })
+  const handleClick = () => {
+    setLoading(true)
+    retrieve()
   }
 
-  handleRowSelect = (rowId, event) => {
+  const handleRowSelect = (rowId, event) => {
     event.preventDefault()
-    this.props.rowSelect(this.state.foodList[rowId])
+    props.rowSelect(foodList[rowId])
   }
 
-  retrieve = () => {
-    retrieveFoodList(this.state.searchValue)
+  const retrieve = () => {
+    retrieveFoodList(searchValue)
       .then(apiSearchResults => {
-        let foodList = [];
-        let error = true;
-        let message = 'No items found for search term.';
+        let foodList = []
+        let error = true
+        let message = 'No items found for search term.'
         let initialFoodList = apiSearchResults
 
         if (initialFoodList && initialFoodList.length > 0) {
@@ -71,80 +53,79 @@ class FoodSearch extends Component {
             return {
               active: false,
               ...foodItem
-            };
-          });
-          
-          let sorted = this.sortList(foodList, 'description')
+            }
+          })
+
+          let sorted = sortList(foodList, 'description')
           foodList = sorted
         }
 
-        this.setState({
-          foodList: foodList,
-          loading: false,
-          showConfirm: error,
-          message: message
-        });
+        setFoodList(foodList)
+        setLoading(false)
+        setShowConfirm(error)
+        setMessage(message)
       })
       .catch(error => {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
-  sortList = (list, propertyName) => {
+  const sortList = (list, propertyName) => {
     const IGNORE_CASE = true
     let sorted = sortByStringProperty(list, propertyName, IGNORE_CASE)
     return sorted
   }
 
-  handleKeyPress = e => {
+  const handleKeyPress = e => {
     if (e.key === 'Enter') {
-      this.handleClick();
+      handleClick()
     }
   }
 
-  render() {
-    return (
-      <div className={styles.container}>
-        <Input
-          loading={this.state.loading}
-          icon='search'
-          iconPosition='left'
-          placeholder='search...'
-          value={this.state.searchValue}
-          onChange={this.handleInputChange}
-          className={styles.searchInput}
-          onKeyPress={this.handleKeyPress}
-          size='large'
-          disabled={true}
-        />
-        {/* <br /> */}
-        <Button color='orange' onClick={this.handleClick} disabled={false} style={{marginLeft:'15px'}}>
-          search
-        </Button>
-        <Button color='red' onClick={this.props.onClose} style={{float:'right'}}>
-          close
-        </Button>
-        <br />
-        {this.state.foodList.length > 0 ? (
-          <React.Fragment>
+  return (
+    <div className={styles.container}>
+      <Input
+        loading={loading}
+        icon='search'
+        iconPosition='left'
+        placeholder='search...'
+        value={searchValue}
+        onChange={handleInputChange}
+        className={styles.searchInput}
+        onKeyPress={handleKeyPress}
+        size='large'
+        disabled={true}
+      />
+      {/* <br /> */}
+      <Button
+        color='orange'
+        onClick={handleClick}
+        disabled={false}
+        style={{ marginLeft: '15px' }}
+      >
+        search
+      </Button>
+      <Button color='red' onClick={props.onClose} style={{ float: 'right' }}>
+        close
+      </Button>
+      <br />
+      {foodList.length > 0 ? (
+        <React.Fragment>
           <FoodListTable
-            foodList={this.state.foodList}
-            selectedFoodItems={this.state.selectedFoodItems}
-            rowClick={this.handleRowSelect}
-            rowSelect={this.selectFoodItem}
+            foodList={foodList}
+            rowClick={handleRowSelect}
           />
-          </React.Fragment>
-        ) : null}
-        <Confirm
-          open={this.state.showConfirm}
-          onCancel={this.handleModalCancel}
-          onConfirm={this.handleModalConfirm}
-          content={this.state.message}
-          size='tiny'
-        />
-      </div>
-    );
-  }
+        </React.Fragment>
+      ) : null}
+      <Confirm
+        open={showConfirm}
+        onCancel={handleModalCancel}
+        onConfirm={handleModalConfirm}
+        content={message}
+        size='tiny'
+      />
+    </div>
+  )
 }
 
 export default FoodSearch
