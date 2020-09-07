@@ -3,7 +3,7 @@ import { Button, Confirm, Input } from 'semantic-ui-react'
 import retrieveFoodList from '../../../apis/retrieveFoodList'
 import FoodListTable from '../../table/FoodListTable/FoodListTable'
 import styles from './FoodSearch.module.css';
-import { findIndexOfId, removeItemFromArrayByIndex } from 'list-utils'
+import { findIndexOfId, sortByStringProperty, removeItemFromArrayByIndex } from 'list-utils'
 
 class FoodSearch extends Component {
   state = {
@@ -66,12 +66,16 @@ class FoodSearch extends Component {
         if (initialFoodList && initialFoodList.length > 0) {
           error = false
           message = ''
+
           foodList = initialFoodList.map(foodItem => {
             return {
               active: false,
               ...foodItem
             };
           });
+          
+          let sorted = this.sortList(foodList, 'description')
+          foodList = sorted
         }
 
         this.setState({
@@ -84,6 +88,12 @@ class FoodSearch extends Component {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  sortList = (list, propertyName) => {
+    const IGNORE_CASE = true
+    let sorted = sortByStringProperty(list, propertyName, IGNORE_CASE)
+    return sorted
   }
 
   handleKeyPress = e => {
