@@ -17,6 +17,10 @@ class FoodSearch extends Component {
     showModal: false
   };
 
+  componentDidMount = () => {
+    this.retrieve()
+  }
+
   handleModalCancel = () => {
     this.setState({ showConfirm: false });
   };
@@ -100,12 +104,16 @@ class FoodSearch extends Component {
           onChange={this.handleInputChange}
           className={styles.searchInput}
           onKeyPress={this.handleKeyPress}
+          size='large'
+          disabled={true}
         />
-        <br />
-        <Button color='orange' onClick={this.handleClick} disabled={false}>
+        {/* <br /> */}
+        <Button color='orange' onClick={this.handleClick} disabled={false} style={{marginLeft:'15px'}}>
           search
         </Button>
-        <Button color='red' onClick={this.props.onClose}>close</Button>
+        <Button color='red' onClick={this.props.onClose} style={{float:'right'}}>
+          close
+        </Button>
         <br />
         {this.state.foodList.length > 0 ? (
           <React.Fragment>
