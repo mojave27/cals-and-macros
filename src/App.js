@@ -17,6 +17,7 @@ const App = () => {
         <div>
           <TopNav />
         </div>
+        <div>
           <Router>
             <Home path='/' />
             <Form path='form' />
@@ -26,6 +27,7 @@ const App = () => {
             <DbManage path='manage-foods-db' />
             <DbManage path='manage-meals-db' />
           </Router>
+        </div>
       </div>
     )
 }
