@@ -11,7 +11,6 @@ import DbManage from './components/admin/datastore/DbManage'
 
 
 const App = () => {
-
     return (
       <div className={styles.App}>
         <div>
