@@ -21,7 +21,7 @@ const MealViewer = props => {
     <div className={styles.container}>
       {meals.map((meal, index) => {
         return (
-          <Segment color='orange'>
+          <Segment color='orange' key={`${meal.name}-${index}`}>
           <div key={`${meal}-${index}`}>
             <div style={{paddingLeft:'10px',color:'orange'}}><h3>{meal.name}</h3></div>
             <MealTable viewOnly={true} foodList={meal.foodList} />

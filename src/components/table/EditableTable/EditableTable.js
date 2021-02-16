@@ -24,6 +24,26 @@ const IconCell = (index, id) => {
     <Table celled padded>
       <Table.Header>
         <Table.Row>
+        <Table.HeaderCell colSpan={props.headers.length + 1}>
+          <Button
+            floated='right'
+            icon
+            labelPosition='left'
+            primary
+            size='small'
+            onClick={props.onAddRow}
+          >
+            <Icon name='add' /> Add Row
+          </Button>
+          <Button size='small' onClick={props.onDeleteSelected}>Delete Selected</Button>
+          <Button disabled size='small'>
+            Delete All
+          </Button>
+        </Table.HeaderCell>
+      </Table.Row>
+      </Table.Header>
+      <Table.Header>
+        <Table.Row>
           <Table.HeaderCell />
           {props.headers.map( (header,index) => {
             return (
@@ -47,27 +67,6 @@ const IconCell = (index, id) => {
           )
         })}
       </Table.Body>
-
-      <Table.Footer fullWidth>
-      <Table.Row>
-        <Table.HeaderCell colSpan={props.headers.length + 1}>
-          <Button
-            floated='right'
-            icon
-            labelPosition='left'
-            primary
-            size='small'
-            onClick={props.onAddRow}
-          >
-            <Icon name='add' /> Add Row
-          </Button>
-          <Button size='small' onClick={props.onDeleteSelected}>Delete Selected</Button>
-          <Button disabled size='small'>
-            Delete All
-          </Button>
-        </Table.HeaderCell>
-      </Table.Row>
-    </Table.Footer>
 
     </Table>
   )
